@@ -1,0 +1,32 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %} {{position.name}} {%endblock%}
+
+{%block content%}
+  
+{%if position.image != 'null' %}
+
+        <div class="image">
+   
+                <img src="{{position.image.url}}"/>
+         </div>
+{%endif%}
+
+<h1 class="title">{{position.name}}</h1>
+<span class="date"> {{position.created_at}}</span>
+
+<p class="content">
+    AREA:</br>{{position.area}}
+    
+</p>
+<p class="content">
+    
+    TIPO DE ACTIVIDAD:{{position.activity_type|safe}}
+</p>
+
+
+
+
+
+
+{%endblock%}

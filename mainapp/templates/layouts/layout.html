@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title> {% block title %}
+        <!--titulo de cada pagina-->
+        {% endblock %}
+
+        /Sitio web con Django
+    </title>
+
+    {%load static%}
+    <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css'%}">
+
+</head>
+
+<body>
+    <!--cabezera-->
+    <header>
+        <div id="logotipo">
+            <!-- cargar logo-->
+            <img src="{%static 'imagenes/icam.png'%}" />
+            <h1>DEPARTAMENTO DE MEDIO AMBIENTE</h1>
+           
+        </div>
+        
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="{%url 'index'%}">Inicio</a>
+            </li>
+            {%if user.email%}
+                <li>
+                    <a href="{%url 'list_positions'%}">Areas</a>
+                    <ul>
+                        {% for area in areas %}
+                        <li>
+                        <a href="{%url 'area' area.0 %}">{{area.1}}</a>
+                        </li>
+                        {% endfor %} 
+                        
+                    </ul>
+                </li>
+                        
+                {% for page in pages %}
+                    <li>
+                        <a href="{%  url 'page' page.2 %}">{{page.1}}</a>
+                    </li>
+                    {% endfor %} 
+                    <li>
+                        <a href="{%url 'logout'%}">Cerrar Sesion</a>
+                    </li>
+            {%else%} 
+                <li>
+                    <a href="{%url 'register'%}">Registro</a>
+                </li>
+                <li>
+                    <a href="{%url 'login'%}">Log In</a>
+                </li>
+            {%endif%}
+        </ul>
+    </nav>
+        
+
+    <div id="content">
+        
+        <div class="box">
+            
+            {% block content %}
+            <!--Codigo de templates-->
+            <strong>Contenido del bloque original</strong>
+            {% endblock %}
+
+        </div>
+
+
+
+    </div>
+  
+
+    <footer>
+        
+        {%now "Y"%}&copy; | ICAM |Todos los derechos reservados |Leonardo La Fuente 
+    </footer>
+
+</body>
+
+
+</html>

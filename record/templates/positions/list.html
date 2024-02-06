@@ -1,0 +1,15 @@
+<!-- acceso a objetos de los views y views accede a la base de datos-->
+{% extends "layouts/layout.html" %}
+
+{% block title %} {{title}} {%endblock%}
+
+{%block content%}
+
+<h1 class="title">{{title}}</h1>
+
+{% include "positions/positions.html"  %}
+{% include "positions/pagination.html"  %}
+
+
+
+{%endblock%}

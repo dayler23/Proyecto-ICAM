@@ -1,0 +1,18 @@
+<div class=pagination>
+    {%if positions.has_previous%}
+        <a href="?page1">&laquo;Primero</a>
+        <a href="?page={{positions.previous_page_number}}">
+            Anterio</a>
+    {%endif%}
+
+    <span class="actual">
+        Pagina {{positions.number}} de {{positions.paginator.num_pages}}
+    </span> 
+
+    {%if positions.has_next%}
+    <a href="?page={{positions.next_page_number}}">
+        Siguiente</a>
+    <a href="?page={{positions.paginator.num_pages}}">Ultima &raquo;</a>
+
+{%endif%}
+    </div>

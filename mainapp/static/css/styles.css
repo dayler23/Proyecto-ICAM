@@ -1,0 +1,361 @@
+/*ESTILOS GENERALES*/
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+.box p, .box h2, .box h3 ,.box ul{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.box ul, .box ol{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+body {
+    background-color: #f2f2f2;
+}
+
+/*ESTILOS CABECERA*/
+header {
+    width: 100%;
+    height: 180px;
+    background-color: #1c314c;
+    margin: auto;
+    /*centrar*/
+
+}
+
+/* para id # elementos unicos*/
+#logotipo {
+    width: 100%;
+    height: 130px;
+    margin: auto;
+    padding-top: 10px;
+
+}
+
+#logotipo h1 {
+    display: block;
+    letter-spacing: 5px;
+    /*espacio entre letras */
+    font-weight: lighter;
+    color: white;
+    float: left;
+    margin-top: 40px;
+    margin-left: 40px;
+
+}
+
+#logotipo img {
+    display: block;
+    width: 250px;
+    float: left;
+    /*ponerlo a lado que quieras*/
+    margin-top: 20px;
+}
+
+
+/*Estilos barra de navegacion*/
+nav {
+    width: 100%;
+    height: 40px;
+    margin: 0 auto;
+    background-color: #1c314c;
+    font-family: inherit;
+    border-bottom: 5px solid #1c314c;
+    
+    /*box-shadow: 0px 22px 22px #01c6f3;
+    /*sombra x y difunado color*/
+    font-size: 25px;
+    
+}
+
+nav > ul {
+    list-style: none;
+    text-decoration: none;
+}
+
+nav > ul > li {
+    line-height: 40px;
+    float: left;
+
+}
+
+nav > ul > li > a {
+    display: block;
+    padding-right: 30px;
+    padding-left: 30px;
+    color: white;
+    
+
+}
+
+/*efectos al pasar encima */
+nav > ul > li >a:hover {
+    background: #1c314c;
+   /* box-shadow: 0px 0px 15px  #f2911a4a inset;*/
+    color: white ;
+    border-bottom: 4px solid #f2901a;
+   
+}
+
+nav > ul > li >ul {
+    display: none;
+    position: absolute;
+    color: white;
+    text-align: left;
+    width: 180px
+}
+
+nav > ul > li:hover > ul{
+    display: block;
+    margin: 0px;
+    color: white;
+    list-style: none;
+    
+}
+nav > ul > li:hover > ul > li{
+   background: #1c314c;
+   border-bottom: 3px solid #5ac7f0;
+   padding: 8px;
+   line-height:25px ;
+   font-size: 18px;   
+   transition: all 300ms; 
+}
+nav > ul > li:hover > ul > li a{
+    color: white;
+    transition: all 300ms; 
+}
+
+nav > ul > li:hover > ul > li:hover{
+    background-color: #f2901a;
+}
+
+nav > ul > li:hover > ul > li:hover a{
+   color: white;
+   display: block;
+}
+
+
+
+
+/*Estilo contenido central*/
+#content{
+    width: 100%;
+    min-height: 920px;
+    margin: 0 auto;
+    
+    
+    
+}
+.box{
+    background: white;
+    width: 95%;
+    min-height: 930px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    margin: 0 auto;
+}
+.box a{
+    color: #1c314c;
+}
+.box a:hover{
+    transition: all 100ms;
+    color: #f2901a;
+  
+}
+.box .image img{
+    float:left;
+    height: 500px;
+    margin-right: 50px;
+
+}
+
+.box form{
+    width: 40%; 
+}
+.box form input,
+.box form label{
+    display: block;
+    padding: 10px;
+    padding-left:0px ;
+}
+
+.box form input[type="text"],
+.box form input[type="email"],
+.box form input[type="password"],
+
+.box form textarea,
+.box form select{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.box form select{
+    width: 100px;
+    padding: 5px;
+}
+.box form input[type="submit"],
+.box form input[type="button"],
+.box form button{
+    padding: 10px;
+    margin-top: 10px;
+    background: #1c314c;
+    border: 1px solid #444;
+    color: white;
+    transition: 300ms all;
+
+}
+
+.rojo{
+    color: red;
+}
+.message,
+.alert-success,
+.alert{
+    padding: 20px;
+    background-color: #1c314c;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.alert-warning{
+    background: red;
+}
+
+/*estilo del boton crearte article*/
+.box form input[type="submit"]:hover,
+.box form input[type="button"]:hover,
+.box form button:hover{
+  cursor: pointer;
+  background:#0f1c2d ;
+ 
+}
+
+.title{
+    color:#1c314c;
+    letter-spacing: 1px;
+    font-size: 30px;
+    margin-bottom: 4px ;
+    margin-top: 5px;
+    
+}
+
+/*caja de jobposition*/
+.position-item{
+    
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-bottom: 4px solid #f2901a ;
+    padding: 15px;
+    clear: both;
+    background: #042c6d7b;
+
+
+}
+.position-item .image{
+    float: left;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    
+    
+}
+.position-item .image img{
+    height: 300px;
+    padding: 50px;
+    
+}
+.position .data{
+    display: block;
+    float: left;
+    padding: 45px;
+    
+   
+}
+
+
+/*estilo pie de pagina*/
+footer{
+    width: 100%;
+    background-color: #1c314c;
+    
+    border: 1px solid #333;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0 auto;
+    border-top: 5px solid #f2901a;
+
+}
+.box table{
+    background: #444;
+    padding: 2px;
+    
+}
+
+
+.clearfix{
+    clear: both;
+    float: none;
+    
+}
+
+.position-item h2{
+    display: block;
+    font-size: 45px;
+    color: #1c314c;
+    margin-bottom: 5px;
+    margin-top: 80px;
+    
+   
+}
+.position-item span.date{
+    display: block;
+    font-size: 15px;
+    color: black;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+/*work area y activity */
+.position-item p{
+    display: block;
+    font-size: 15px;
+    color: #1c314c;
+    margin-bottom: 10px;
+    font-size: 20px;
+    
+    
+}
+.btn{
+    padding: 10px;
+    background: rgba(101, 3, 3, 0.822);
+    color: white;
+    border:1px solid black;
+    display: block;
+    margin-top: 20px;
+    width: 100px;
+    text-align: center;
+}
+/*date contenido de page*/
+.date{
+    display: block;
+    margin-top:15px ;
+    margin-bottom: 25px;
+    color: gray;
+}
+.content{
+    line-height: 30px;
+}
+
+
+
+
+
+
+
