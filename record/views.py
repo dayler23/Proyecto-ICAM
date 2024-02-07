@@ -65,6 +65,15 @@ def position(request, position_id):
         'position': position
     })
 
+def company_positions(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    positions = Position.objects.filter(area__company=company)
+    request.session['selected_company_id'] = company.id
+    return render(request, 'positions/list.html', {
+        'title': 'Puestos de Trabajo',
+        'positions': positions
+    })
+
 
 
 

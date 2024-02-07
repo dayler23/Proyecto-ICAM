@@ -353,9 +353,53 @@ footer{
     line-height: 30px;
 }
 
+/*index tarjeta empresas*/
+.company-box {
+    display: flex;
+    width: 70%;
+    margin: 20px auto; /* Espacio entre las tarjetas */
+    border-bottom: 1px solid #1c314c; /* Solo borde inferior */
+    padding: 20px;
+    box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.2); /* Efecto de sombra celeste azul */
+    background-color: rgba(28, 49, 76, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
+}
 
+.company-box .logo {
+    flex: 1;
+}
 
+.company-box .company-info {
+    flex: 2;
+    padding-left: 20px;
+}
 
+.company-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
+.company-box img:hover {
+    transform: scale(1.1); /* La imagen se amplía un 10% cuando pasas el cursor por encima */
+}
 
+.company-box h2 {
+    text-align: center; /* El nombre de la empresa en el centro */
+    font-size: 30px; /* El nombre de la empresa más grande */
+}
 
+.company-box p {
+    font-size: 14px; /* Dirección, sector y departamento en un tamaño más pequeño */
+}
+
+.company-box p:nth-child(1) {
+    font-weight: bold; /* Hace que el texto sea negrita */
+    font-size: 20px; /* Aumenta el tamaño de la fuente */
+}
+
+.company-box p:nth-child(2),
+.company-box p:nth-child(3) {
+    text-align: left; /* Alinea el texto a la izquierda */
+}

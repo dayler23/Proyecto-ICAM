@@ -1,14 +1,9 @@
 from django.contrib.auth.models import User
 from record.models import Company, Area, Position
-
 def get_areas(request):
-    if request.user.is_authenticated:
-        # Obtén la empresa del usuario que ha iniciado sesión
-        companies = Company.objects.filter(user=request.user)
-
-        # Obtén solo las áreas de esa empresa
-        areas = Area.objects.filter(company__in=companies).values_list('id', 'name')
-
+    if request.user.is_authenticated and 'selected_company_id' in request.session:
+        company = Company.objects.get(id=request.session['selected_company_id'])
+        areas = Area.objects.filter(company=company).values_list('id', 'name')
         return {
             'areas': areas,
         }
@@ -16,4 +11,3 @@ def get_areas(request):
         return {
             'areas': [],
         }
-
