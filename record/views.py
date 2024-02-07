@@ -57,8 +57,8 @@ def position(request, position_id):
     # Crea la página de cada puesto
     position = get_object_or_404(Position, id=position_id)
 
-    # Asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
-    if position.area.company.user != request.user:
+    # Si el usuario no es superusuario, asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
+    if not request.user.is_superuser and position.area.company.user != request.user:
         return HttpResponseForbidden("No tienes permiso para ver este puesto.")
 
     return render(request, 'positions/detail.html', {
