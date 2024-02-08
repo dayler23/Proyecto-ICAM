@@ -35,28 +35,16 @@ header {
     height: 130px;
     margin: auto;
     padding-top: 10px;
-
-}
-
-#logotipo h1 {
-    display: block;
-    letter-spacing: 5px;
-    /*espacio entre letras */
-    font-weight: lighter;
-    color: white;
-    float: left;
-    margin-top: 40px;
-    margin-left: 40px;
-
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente */
+    align-items: center; /* Centra la imagen verticalmente */
 }
 
 #logotipo img {
     display: block;
     width: 250px;
-    float: left;
-    /*ponerlo a lado que quieras*/
-    margin-top: 20px;
 }
+
 
 
 /*Estilos barra de navegacion*/
@@ -211,14 +199,12 @@ nav > ul > li:hover > ul > li:hover a{
 
 }
 
-.rojo{
-    color: red;
-}
+
 .message,
 .alert-success,
 .alert{
     padding: 20px;
-    background-color: #1c314c;
+    
     color: white;
     text-align: center;
     margin-bottom: 20px;
@@ -246,37 +232,64 @@ nav > ul > li:hover > ul > li:hover a{
 }
 
 /*caja de jobposition*/
-.position-item{
+
+.position-item {
+        display: flex;
+        width: 70%;
+        height: auto;
+        margin: auto; /* Espacio entre las tarjetas */
+        border-radius: 20px;
+        padding-left: 20px;
+        box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.364); /* Efecto de sombra celeste azul */
+        background-color: rgba(28, 49, 76, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
+        border: 2px solid rgba(0, 0, 0, 0.2); /* Borde con relieve */
+    }
     
-    margin-bottom: 20px;
-    margin-top: 20px;
-    border-bottom: 4px solid #f2901a ;
-    padding: 15px;
-    clear: both;
-    background: #042c6d7b;
+    
 
 
+.position-item .image {
+    flex: 1;
 }
-.position-item .image{
-    float: left;
-    width: 400px;
-    height: 400px;
-    overflow: hidden;
-    
-    
+
+.position-item .data {
+    flex: 2;
+    padding-left: 20px;
+    padding-right: 20px;
+
 }
-.position-item .image img{
-    height: 300px;
-    padding: 50px;
-    
+
+.position-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
-.position .data{
-    display: block;
-    float: left;
-    padding: 45px;
-    
-   
+
+.position-item img:hover {
+    transform: scale(1.1); /* La imagen se amplía un 10% cuando pasas el cursor por encima */
 }
+
+.position-item h2 {
+    text-align: center; /* El nombre de la empresa en el centro */
+    font-size: 30px; /* El nombre de la empresa más grande */
+}
+
+.position-item p {
+    font-size: 14px; /* Dirección, sector y departamento en un tamaño más pequeño */
+    overflow-wrap: break-word; /* Ajusta el texto automáticamente */
+}
+
+.position-item p:nth-child(1) {
+    font-size: 20px; /* Aumenta el tamaño de la fuente */
+}
+
+.position-item p:nth-child(2),
+.position-item p:nth-child(3) {
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
 
 
 /*estilo pie de pagina*/
@@ -358,9 +371,10 @@ footer{
     display: flex;
     width: 70%;
     margin: 20px auto; /* Espacio entre las tarjetas */
-    border-bottom: 1px solid #1c314c; /* Solo borde inferior */
+    border-radius: 20px;
+    /*border-bottom: 1px solid #4c361c; /* Solo borde inferior */
     padding: 20px;
-    box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.2); /* Efecto de sombra celeste azul */
+    box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.364); /* Efecto de sombra celeste azul */
     background-color: rgba(28, 49, 76, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
 }
 

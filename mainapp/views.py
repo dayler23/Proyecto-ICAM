@@ -5,20 +5,32 @@ from mainapp.forms import RegisterForm
 from django.contrib.auth import authenticate,login,logout
 from record.models import Company, Area  # Importa los modelos de la empresa y el área
 from django.contrib.auth.decorators import login_required
+from mainapp.forms import CompanyForm
+
 # Create your views here.
 @login_required
 def index(request):
+    form = None  # Inicializa la variable form
+    companies = None  # Inicializa la variable companies
     if request.user.is_superuser:
-        # Si el usuario es superusuario, obtén todas las empresas
         companies = Company.objects.all()
+        form = CompanyForm()  # Instancia el formulario
+        if request.method == 'POST':
+            form = CompanyForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Empresa añadida con éxito")
+                return redirect('index')  # Redirige a la misma página después de guardar
     else:
-        # Si el usuario no es superusuario, obtén solo las empresas que le corresponden
         companies = Company.objects.filter(user=request.user)
 
     return render(request, 'mainapp/index.html', {
         'title': 'Inicio',
         'companies': companies,
+        'form': form,  # Pasa el formulario al contexto
     })
+
+
 
 
 #registro
@@ -67,3 +79,5 @@ def login_page(request):
 def logout_user(request):
      logout(request)
      return redirect('login')
+
+#buscar empresa en index

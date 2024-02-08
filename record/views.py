@@ -38,6 +38,8 @@ def list(request):
 
 #metodo para extraer todo el objeto de area y mostrar los 
 #positions de cada area
+
+#muestra los puestos por area al seleccionar el area 
 @login_required(login_url="login")
 def area(request,area_id):
 
@@ -65,6 +67,7 @@ def position(request, position_id):
         'position': position
     })
 
+#muestra todos los puestos de la empresa seleccionada en el index
 def company_positions(request, company_id):
     company = get_object_or_404(Company, id=company_id)
     positions = Position.objects.filter(area__company=company)

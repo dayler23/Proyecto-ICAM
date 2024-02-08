@@ -17,12 +17,24 @@
     <p>
         {{user.email}}
     </p>
+    {% if user.is_superuser %}
+    <button id="toggleFormButton">Añadir Empresa</button>
+    <div id="companyForm" style="display: none;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+{% endif %}
+
+
    
     {% for company in companies %}
     <div class="company-box">
         <div class="logo">
             <a href="{% url 'company_positions' company.id %}">
-                <img src="{{company.image.url}}" alt="{{company.name}}">
+                <img src="{{ company.image.url }}" alt="{{ company.name }}">
             </a>
         </div>
         <div class="company-info">
@@ -40,5 +52,18 @@
     <h2>Identificate para ver mas cosas</h2>
 
 {%endif%}
+<script>
+    window.onload = function() {
+        document.getElementById('toggleFormButton').addEventListener('click', function() {
+            var form = document.getElementById('companyForm');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        });
+    }
+    </script>
+    
 
 {%endblock%}

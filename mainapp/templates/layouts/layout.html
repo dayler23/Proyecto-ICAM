@@ -12,6 +12,8 @@
     </title>
 
     {%load static%}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <link rel="stylesheet" type="text/css" href="{%static 'css/styles.css'%}">
 
 </head>
@@ -22,7 +24,7 @@
         <div id="logotipo">
             <!-- cargar logo-->
             <img src="{%static 'imagenes/icam.png'%}" />
-            <h1>DEPARTAMENTO DE MEDIO AMBIENTE</h1>
+            
            
         </div>
         
@@ -31,11 +33,11 @@
     <nav>
         <ul>
             <li>
-                <a href="{%url 'index'%}">Empresa</a>
+                <a href="{%url 'index'%}"> <i class="fas fa-building"></i>Empresa</a>
             </li>
             {%if user.email%}
                 <li>
-                    <a href="{%url 'list_positions'%}">Areas</a>
+                    <a href="{%url 'list_positions'%}"><i class="fas fa-map-marker-alt"></i>Areas</a>
                     <ul>
                         {% for area in areas %}
                         <li>
@@ -52,14 +54,14 @@
                     </li>
                     {% endfor %} 
                     <li>
-                        <a href="{%url 'logout'%}">Cerrar Sesion</a>
+                        <a href="{%url 'logout'%}"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>
                     </li>
             {%else%} 
                 <li>
-                    <a href="{%url 'register'%}">Registro</a>
+                    <a href="{%url 'register'%}"><i class="fas fa-user-plus"></i> Registro</a>
                 </li>
                 <li>
-                    <a href="{%url 'login'%}">Log In</a>
+                    <a href="{%url 'login'%}"><i class="fas fa-sign-in-alt"></i>Log In</a>
                 </li>
             {%endif%}
         </ul>
