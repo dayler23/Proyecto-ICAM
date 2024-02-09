@@ -19,7 +19,7 @@ def index(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Empresa añadida con éxito")
-                return redirect('index')  # Redirige a la misma página después de guardar
+                return redirect('index')  # Redirige a la misma página inicio después de guardar
         else:
             form = CompanyForm()  # Instancia el formulario
     else:
