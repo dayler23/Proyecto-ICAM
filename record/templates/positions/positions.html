@@ -1,18 +1,17 @@
 {% for position in positions%}
     <article class="position-item">
-            {%if position.image != 'null' %}
-
-        <div class="image">
+        {%if position.image != 'null' %}
+            <div class="image">
                 <img src="{{position.image.url}}"/>
-         </div>
-            {%endif%}
+            </div>
+        {%else%}
+            <div class="placeholder"></div>
+        {%endif%}
 
-
-         <div class="data">
-            <h2><a href="{%url 'position' position.id%}"> 
+        <div class="data">
+            <h3><a href="{%url 'position' position.id%}"> 
                 {{position.name}}
-            </a>
-            </h2>
+            </a></h3>
             <span class="date"> {{position.created_at}}
             <p>
                 <strong>EMPRESA:</strong>{{position.area.company}}
@@ -30,10 +29,7 @@
             </p>
         </div>
         
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
         
-     </article>     
-     
-        
-
+    </article>     
 {% endfor %}

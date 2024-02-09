@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 
 #IMPORTACION DE MODELOS PARA OBTENER DATOS
 from record.models import Company,Area,Position
@@ -6,7 +6,7 @@ from record.models import Company,Area,Position
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-
+from record.forms import AreaForm  # Importa el formulario de área
 
 
 
@@ -76,7 +76,6 @@ def company_positions(request, company_id):
         'title': 'Puestos de Trabajo',
         'positions': positions
     })
-
 
 
 

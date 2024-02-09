@@ -25,3 +25,8 @@ class PositionForm(forms.ModelForm):
             self.add_error('area', 'Por favor, selecciona un área.')
 
         return cleaned_data
+#formulario para agregar Area
+class AreaForm(forms.ModelForm):
+    class Meta:
+        model = Area
+        fields = ['name', 'description']
