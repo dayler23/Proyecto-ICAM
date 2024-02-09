@@ -14,13 +14,14 @@ def index(request):
     companies = None  # Inicializa la variable companies
     if request.user.is_superuser:
         companies = Company.objects.all()
-        form = CompanyForm()  # Instancia el formulario
         if request.method == 'POST':
-            form = CompanyForm(request.POST)
+            form = CompanyForm(request.POST, request.FILES)  # Añade request.FILES
             if form.is_valid():
                 form.save()
                 messages.success(request, "Empresa añadida con éxito")
                 return redirect('index')  # Redirige a la misma página después de guardar
+        else:
+            form = CompanyForm()  # Instancia el formulario
     else:
         companies = Company.objects.filter(user=request.user)
 
@@ -54,10 +55,11 @@ def register_page(request):
                     'register_form':register_form
      })
 
+##logi
 ##login
 def login_page(request):
      if request.user.is_authenticated:
-          return redirect('inicio')
+          return redirect('incio')  # Cambiado de 'inicio' a 'dashboard'
      else:
           if request.method=='POST':
                username=request.POST.get("username")
@@ -67,7 +69,7 @@ def login_page(request):
 
                if user is not None:
                     login(request,user)
-                    return redirect('inicio')
+                    return redirect('inicio')  # Cambiado de 'inicio' a 'dashboard'
                else:
                     messages.warning(request,"No te has identificado correctamente")
 

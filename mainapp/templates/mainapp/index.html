@@ -20,7 +20,8 @@
     {% if user.is_superuser %}
     <button id="toggleFormButton">Añadir Empresa</button>
     <div id="companyForm" style="display: none;">
-        <form method="post">
+        <!-- AÑADIR: enctype="multipart/form-data" -->
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Guardar</button>
@@ -34,6 +35,7 @@
     <div class="company-box">
         <div class="logo">
             <a href="{% url 'company_positions' company.id %}">
+                <!-- AÑADIR: Verificar que estás mostrando la imagen correctamente -->
                 <img src="{{ company.image.url }}" alt="{{ company.name }}">
             </a>
         </div>
