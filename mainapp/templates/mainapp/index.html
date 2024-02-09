@@ -18,7 +18,7 @@
         {{user.email}}
     </p>
     {% if user.is_superuser %}
-    <button id="toggleFormButton">Añadir Empresa</button>
+    <button id="toggleFormButton" class="form-button">Añadir Empresa</button>
     <div id="companyForm" style="display: none;">
         <!-- AÑADIR: enctype="multipart/form-data" -->
         <form method="post" enctype="multipart/form-data">
@@ -30,14 +30,11 @@
 {% endif %}
 
 
-   
-    {% for company in companies %}
+{% for company in companies %}
+<a href="{% url 'company_positions' company.id %}" style="text-decoration: none; color: inherit;">
     <div class="company-box">
         <div class="logo">
-            <a href="{% url 'company_positions' company.id %}">
-                <!-- AÑADIR: Verificar que estás mostrando la imagen correctamente -->
-                <img src="{{ company.image.url }}" alt="{{ company.name }}">
-            </a>
+            <img src="{{ company.image.url }}" alt="{{ company.name }}">
         </div>
         <div class="company-info">
             <h2>{{company.name}}</h2>
@@ -46,7 +43,9 @@
             <p>Rubro: {{company.sector}}</p>
         </div>
     </div>
+</a>
 {% endfor %}
+
 
 
 

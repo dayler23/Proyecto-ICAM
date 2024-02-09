@@ -379,7 +379,12 @@ footer{
 }
 
 .company-box .logo {
-    flex: 1;
+    display: flex; /* Habilita Flexbox */
+    align-items: center; /* Centra los elementos verticalmente */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    height: 200px; /* Ajusta al tamaño que prefieras */
+    width: 200px; /* Ajusta al tamaño que prefieras */
+    overflow: hidden; /* Esto asegura que la imagen no se salga de su contenedor */
 }
 
 .company-box .company-info {
@@ -390,7 +395,7 @@ footer{
 .company-box img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: cover; /* Esto asegura que la imagen cubra todo el espacio disponible, recortándola si es necesario */
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -416,4 +421,19 @@ footer{
 .company-box p:nth-child(2),
 .company-box p:nth-child(3) {
     text-align: left; /* Alinea el texto a la izquierda */
+}
+
+/*aañdir empresa*/
+.form-button {
+    background-color: #1c314c;; /* color de fondo */
+    border: none;
+    color: white; /* color del texto */
+    padding: 15px 32px; /* tamaño del botón */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px; /* bordes redondeados */
 }
