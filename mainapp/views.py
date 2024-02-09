@@ -14,13 +14,14 @@ def index(request):
     companies = None  # Inicializa la variable companies
     if request.user.is_superuser:
         companies = Company.objects.all()
-        form = CompanyForm()  # Instancia el formulario
         if request.method == 'POST':
-            form = CompanyForm(request.POST)
+            form = CompanyForm(request.POST, request.FILES)  # Añade request.FILES
             if form.is_valid():
                 form.save()
                 messages.success(request, "Empresa añadida con éxito")
                 return redirect('index')  # Redirige a la misma página después de guardar
+        else:
+            form = CompanyForm()  # Instancia el formulario
     else:
         companies = Company.objects.filter(user=request.user)
 
@@ -29,8 +30,6 @@ def index(request):
         'companies': companies,
         'form': form,  # Pasa el formulario al contexto
     })
-
-
 
 
 #registro
