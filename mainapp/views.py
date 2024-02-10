@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from mainapp.forms import RegisterForm
@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login,logout
 from record.models import Company, Area  # Importa los modelos de la empresa y el área
 from django.contrib.auth.decorators import login_required
 from mainapp.forms import CompanyForm
+from django.urls import reverse 
 
 # Create your views here.
 @login_required
@@ -87,4 +88,9 @@ def logout_user(request):
      logout(request)
      return redirect('login')
 
-#buscar empresa en index
+#eliminar empresa en index
+@login_required
+def delete_company(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    company.delete()
+    return redirect(reverse('index'))

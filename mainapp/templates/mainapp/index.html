@@ -41,9 +41,17 @@
             <p>Departamento: {{ company.department}}</p>
             <p>Direccion: {{company.address}}</p>
             <p>Rubro: {{company.sector}}</p>
+            <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
         </div>
+        
     </div>
 </a>
+
 
 {% endfor %}
 

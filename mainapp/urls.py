@@ -9,6 +9,8 @@ urlpatterns = [
     path('login/',views.login_page,name="login"), 
 
     path('logout/',views.logout_user,name="logout"), 
+    path('eliminar-empresa/<int:company_id>/', views.delete_company, name='delete_company'),
+
 
 ]
 
