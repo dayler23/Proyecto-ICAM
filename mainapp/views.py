@@ -14,22 +14,30 @@ def index(request):
     companies = None  # Inicializa la variable companies
     if request.user.is_superuser:
         companies = Company.objects.all()
-        if request.method == 'POST':
-            form = CompanyForm(request.POST, request.FILES)  # Añade request.FILES
-            if form.is_valid():
-                form.save()
-                messages.success(request, "Empresa añadida con éxito")
-                return redirect('index')  # Redirige a la misma página después de guardar
+        if not companies.exists():  # Verifica si la consulta devolvió algún resultado
+            messages.warning(request, "No hay empresas disponibles")
         else:
-            form = CompanyForm()  # Instancia el formulario
+            if request.method == 'POST':
+                form = CompanyForm(request.POST, request.FILES)  # Añade request.FILES
+                if form.is_valid():
+                    form.save()
+                    messages.success(request, "Empresa añadida con éxito")
+                    return redirect('index')  # Redirige a la misma página después de guardar
+            else:
+                form = CompanyForm()  # Instancia el formulario
     else:
         companies = Company.objects.filter(user=request.user)
+        if not companies.exists():  # Verifica si la consulta devolvió algún resultado
+            messages.warning(request, "No tienes ninguna empresa asociada")
 
     return render(request, 'mainapp/index.html', {
         'title': 'Inicio',
         'companies': companies,
         'form': form,  # Pasa el formulario al contexto
     })
+
+
+
 
 
 #registro
