@@ -29,7 +29,6 @@
     </div>
 {% endif %}
 
-
 {% for company in companies %}
 <a href="{% url 'company_positions' company.id %}" style="text-decoration: none; color: inherit;">
     <div class="company-box">
@@ -41,18 +40,21 @@
             <p>Departamento: {{ company.department}}</p>
             <p>Direccion: {{company.address}}</p>
             <p>Rubro: {{company.sector}}</p>
-            <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');">
+        </div>
+        <!-- Botones de eliminación y edición -->
+        <div>
+            {% if user.is_superuser %}
+            <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');" style="display: inline;">
                 {% csrf_token %}
-                <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer;">
+                <button type="submit" style="background-color: #ff7f7f; color: white; border: none; cursor: pointer;">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>
+            {% endif %}
+            
         </div>
-        
     </div>
 </a>
-
-
 {% endfor %}
 
 
