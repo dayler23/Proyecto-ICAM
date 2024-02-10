@@ -10,6 +10,7 @@ urlpatterns = [
 
     path('logout/',views.logout_user,name="logout"), 
     path('eliminar-empresa/<int:company_id>/', views.delete_company, name='delete_company'),
+    path('editar-empresa/<int:company_id>/', views.edit_company, name='edit_company'),
 
 
 ]

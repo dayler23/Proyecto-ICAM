@@ -40,19 +40,25 @@
             <p>Departamento: {{ company.department}}</p>
             <p>Direccion: {{company.address}}</p>
             <p>Rubro: {{company.sector}}</p>
-        </div>
-        <!-- Botones de eliminación y edición -->
-        <div>
             {% if user.is_superuser %}
+        <!-- Botones de eliminación y edición -->
+        <div style="display: block; justify-content: flex-end; flex-direction: column;">
             <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');" style="display: inline;">
                 {% csrf_token %}
-                <button type="submit" style="background-color: #ff7f7f; color: white; border: none; cursor: pointer;">
+                <button type="submit" style="background-color: #ff7f7f; color: white; border: none; cursor: pointer; width: 80px;">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>
-            {% endif %}
-            
+            <!-- Botón de edición -->
+            <a href="{% url 'edit_company' company.id %}">
+            <button style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:35px">
+                <i class="fas fa-pencil-alt"></i>
+            </button>
+    </a>
         </div>
+        {% endif %}
+        </div>
+        
     </div>
 </a>
 {% endfor %}

@@ -94,3 +94,15 @@ def delete_company(request, company_id):
     company = get_object_or_404(Company, id=company_id)
     company.delete()
     return redirect(reverse('index'))
+@login_required
+def edit_company(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, instance=company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Empresa editada con éxito")
+            return redirect('index')
+    else:
+        form = CompanyForm(instance=company)
+    return render(request, 'mainapp/edit_company.html', {'form': form})
