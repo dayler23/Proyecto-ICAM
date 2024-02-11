@@ -7,7 +7,9 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from record.forms import AreaForm  # Importa el formulario de área
-
+from mainapp.forms import CompanyForm
+from django.contrib import messages
+from django.urls import reverse 
 
 
 
@@ -77,6 +79,26 @@ def company_positions(request, company_id):
         'positions': positions
     })
 
+#eliminar empresa en index
+@login_required
+def delete_company(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    company.delete()
+    return redirect(reverse('index'))
 
+
+#editar empresa en index
+@login_required
+def edit_company(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, request.FILES, instance=company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Empresa editada con éxito")
+            return redirect('index')
+    else:
+        form = CompanyForm(instance=company)
+    return render(request, 'mainapp/edit_company.html', {'form': form})
 
 
