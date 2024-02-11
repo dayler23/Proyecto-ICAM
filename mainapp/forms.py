@@ -17,4 +17,10 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = '__all__'  # Todos los campos del modelo Company
+        labels={
+            'name':'Empresa:',
+            'sector':'Sector o Rubro',
+            'image':'Logo',
+            'user':'Usuario Encargado'
+        }
 
