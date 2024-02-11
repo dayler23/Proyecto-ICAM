@@ -17,9 +17,9 @@
         {{user.email}}
     </p>
     {% if user.is_superuser %}
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <button id="toggleFormButton" class="form-button">Añadir Empresa</button>
-        <div id="companyForm" class="modal">
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <!-- Botón de añadir empresa -->
+        <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Empresa</button>        <div id="companyForm" class="modal">
             <div class="modal-content">
                 <a href="#" id="close">X</a>
                 <form method="post" enctype="multipart/form-data">
@@ -35,14 +35,16 @@
                             {% endif %}
                         </div>
                     {% endfor %}
-                    <button type="submit">Guardar</button>
+                    <button class="form-button" type="submit">Guardar</button>
                 </form>
             </div>
         </div>
         <!-- Formulario de búsqueda -->
-        <form method="get" action="{% url 'search_company' %}">
-            <input type="text" name="q" placeholder="Buscar empresa">
-            <button type="submit">Buscar</button>
+        <form method="get" action="{% url 'search_company' %}" style="display: flex; align-items: center;">
+            <input type="text" name="q" placeholder="Buscar empresa" style="margin: 0; padding: 10px;">
+            <button class="form-button" type="submit" style="margin: 0; padding: 10px;"><i class="fas fa-search"></i></button>
+        
+                            
         </form>
     </div>
 {% endif %}
@@ -63,7 +65,7 @@
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
             <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');" style="display: inline;">
                 {% csrf_token %}
-                <button type="submit" style="background-color: #ff7f7f; color: white; border: none; cursor: pointer; width: 80px;">
+                <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer; width: 80px;">
                     <i class="fas fa-trash"></i>
                 </button>
             </form>

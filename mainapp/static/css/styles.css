@@ -430,12 +430,12 @@ footer{
     background-color: #1c314c; /* color de fondo */
     border: none;
     color: white; /* color del texto */
-    padding: 15px 32px; /* tamaño del botón */
+    padding: 15px 30px; /* tamaño del botón */
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 4px;
     cursor: pointer;
     border-radius: 12px; /* bordes redondeados */
 }
@@ -485,7 +485,7 @@ footer{
 /* Estilo para el botón de cerrar */
 #close {
     color: white;
-    background-color: rgba(255, 0, 0, 0.65);
+    background-color: rgba(255, 0, 0, 0.739);
     position: absolute;
     top: 10px;
     right: 15px;
