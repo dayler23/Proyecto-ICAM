@@ -10,7 +10,7 @@ from record.forms import AreaForm  # Importa el formulario de área
 from mainapp.forms import CompanyForm
 from django.contrib import messages
 from django.urls import reverse 
-
+from django.db.models import Q
 
 
 # Create your views here.
@@ -102,3 +102,24 @@ def edit_company(request, company_id):
     return render(request, 'mainapp/edit_company.html', {'form': form})
 
 
+#buscar
+@login_required
+def edit_company(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, request.FILES, instance=company)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Empresa editada con éxito")
+            return redirect('index')
+    else:
+        form = CompanyForm(instance=company)
+    return render(request, 'mainapp/edit_company.html', {'form': form})
+
+def search_company(request):
+    query = request.GET.get('q')
+    if query:
+        companies = Company.objects.filter(Q(name__icontains=query) | Q(address__icontains=query))
+    else:
+        companies = Company.objects.all()
+    return render(request, 'mainapp/index.html', {'companies': companies})

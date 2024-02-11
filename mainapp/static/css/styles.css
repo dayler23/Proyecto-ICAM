@@ -427,7 +427,7 @@ footer{
 
 /*aañdir empresa*/
 .form-button {
-    background-color: #1c314c;; /* color de fondo */
+    background-color: #1c314c; /* color de fondo */
     border: none;
     color: white; /* color del texto */
     padding: 15px 32px; /* tamaño del botón */
@@ -438,4 +438,91 @@ footer{
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 12px; /* bordes redondeados */
+}
+/*form añadir empresa*/
+/* Estilo para la ventana de fondo */
+.modal {
+    display: none; /* La ventana emergente está oculta por defecto */
+    position: fixed; /* Fija la ventana en la posición */
+    z-index: 1; /* Sitúa la ventana por encima de todo */
+    left: 0;
+    top: 0;
+    color:white;
+    width: 100%; /* Anchura completa */
+    height: 100%; /* Altura completa */
+    overflow: auto; /* Habilita el scroll si es necesario */
+    background-color: rgb(0,0,0); /* Color de fondo */
+    background-color: rgba(0,0,0,0.4); /* También se aplica color de fondo, pero con opacidad */
+}
+
+/* Estilo para la ventana emergente */
+/*form añadir empresa*/
+/* Estilo para la ventana de fondo */
+.modal {
+    display: none; /* La ventana emergente está oculta por defecto */
+    position: fixed; /* Fija la ventana en la posición */
+    z-index: 1; /* Sitúa la ventana por encima de todo */
+    left: 0;
+    top: 0;
+    color:white;
+    width: 100%; /* Anchura completa */
+    height: 100%; /* Altura completa */
+    overflow: auto; /* Habilita el scroll si es necesario */
+    background-color: rgb(0,0,0); /* Color de fondo */
+    background-color: rgba(0,0,0,0.4); /* También se aplica color de fondo, pero con opacidad */
+}
+
+/* Estilo para la ventana emergente */
+.modal-content {
+    position: relative;
+    background-color: #1c314cc8;
+    margin: 15% auto; /* 15% desde arriba y centrado */
+    padding: 20px;
+    border: 3px solid #f2901a;
+    width: 30%; /* Podrías ajustar esto a lo que prefieras */
+}
+
+/* Estilo para el botón de cerrar */
+#close {
+    color: white;
+    background-color: rgba(255, 0, 0, 0.65);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 20%;
+    
+}
+
+
+#close:hover,
+#close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Estilo para el botón de cerrar */
+#close {
+    color: white;
+    background-color: rgba(255, 0, 0, 0.65);
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 20%;
+    
+}
+
+
+#close:hover,
+#close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
 }

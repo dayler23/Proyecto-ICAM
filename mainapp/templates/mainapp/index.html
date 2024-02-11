@@ -4,7 +4,6 @@
 <h1>{{title}}</h1>
 
 {% if messages %}
-
     {%for message in messages%}
     <div class="alert alert-success">
         {{message}}
@@ -18,13 +17,32 @@
         {{user.email}}
     </p>
     {% if user.is_superuser %}
-    <button id="toggleFormButton" class="form-button">Añadir Empresa</button>
-    <div id="companyForm" style="display: none;">
-        <!-- AÑADIR: enctype="multipart/form-data" -->
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Guardar</button>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <button id="toggleFormButton" class="form-button">Añadir Empresa</button>
+        <div id="companyForm" class="modal">
+            <div class="modal-content">
+                <a href="#" id="close">X</a>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {{ form.hidden_fields }}
+                    {% for field in form.visible_fields %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+        <!-- Formulario de búsqueda -->
+        <form method="get" action="{% url 'search_company' %}">
+            <input type="text" name="q" placeholder="Buscar empresa">
+            <button type="submit">Buscar</button>
         </form>
     </div>
 {% endif %}
@@ -63,25 +81,32 @@
 </a>
 {% endfor %}
 
-
-
-
 {% else %}
     <h2>Identificate para ver mas cosas</h2>
 
 {%endif%}
 <script>
     window.onload = function() {
-        document.getElementById('toggleFormButton').addEventListener('click', function() {
-            var form = document.getElementById('companyForm');
-            if (form.style.display === 'none') {
-                form.style.display = 'block';
-            } else {
-                form.style.display = 'none';
+        var modal = document.getElementById('companyForm');
+        var btn = document.getElementById('toggleFormButton');
+        var closeLink = document.getElementById('close');
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        closeLink.onclick = function(e) {
+            e.preventDefault();
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
-        });
+        }
     }
-    </script>
+</script>
     
 
 {%endblock%}
