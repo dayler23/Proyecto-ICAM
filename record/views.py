@@ -18,23 +18,29 @@ from django.db.models import Q
 #metodo para extraer todo el objeto de Position y mostrar en list.html
 @login_required(login_url="login")
 def list(request):
-    # Obtén solo las empresas del usuario que ha iniciado sesión
-    companies = Company.objects.filter(user=request.user)
+    # Obtén el ID de la empresa seleccionada de la sesión
+    selected_company_id = request.session.get('selected_company_id')
 
-    # Obtén solo las áreas de esas empresas
-    areas = Area.objects.filter(company__in=companies)
+    # Si no hay ninguna empresa seleccionada, muestra un mensaje de error
+    if selected_company_id is None:
+        messages.error(request, "Por favor, selecciona una empresa primero.")
+        return redirect('index')
+
+    # Obtén la empresa seleccionada
+    selected_company = get_object_or_404(Company, id=selected_company_id)
+
+    # Obtén solo las áreas de la empresa seleccionada
+    areas = Area.objects.filter(company=selected_company)
 
     # Obtén solo los puestos de trabajo de esas áreas
     positions = Position.objects.filter(area__in=areas)
 
-    paginator = Paginator(positions, 4)
-    page = request.GET.get('page')
-    page_positions = paginator.get_page(page)
-
     return render(request, 'positions/list.html', {
         'title': 'Puestos de Trabajo',
-        'positions': page_positions
+        'positions': positions
     })
+
+
 
 
 
@@ -44,16 +50,20 @@ def list(request):
 #muestra los puestos por area al seleccionar el area 
 @login_required(login_url="login")
 def area(request,area_id):
-
     #crea pagina de cada area
     area=get_object_or_404(Area,id=area_id)
 
-    #enlaza los position por area
-    positions = Position.objects.filter(area=area)
+    # Obtén el ID de la empresa seleccionada de la sesión
+    company_id = request.session.get('selected_company_id')
+    company = get_object_or_404(Company, id=company_id)
+
+    #enlaza los position por area y empresa
+    positions = Position.objects.filter(area=area, area__company=company)
     return render(request,'areas/area.html',{
         'area':area,
         'positions':positions
     })
+
 
 
 @login_required(login_url="login")
