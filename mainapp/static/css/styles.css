@@ -16,7 +16,7 @@
 }
 
 body {
-    background-color: #f2f2f2;
+    background-color: #1c314c;
 }
 
 /*ESTILOS CABECERA*/
@@ -519,10 +519,133 @@ footer{
     
 }
 
-
 #close:hover,
 #close:focus {
     color: white;
     text-decoration: none;
     cursor: pointer;
+}
+
+/*LOGIN*/
+.login-container {
+    background: #1c314c ;/* Azul oscuro */
+    color: white;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.login-title {
+    text-align: center;
+    color: #ffffff; /* Blanco */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.login-form-group label {
+    text-align: left;
+    width: 100%;
+    color: #ffffff; /* Blanco */
+}
+
+.login-form-group input {
+    margin: 10px 0;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.login-button {
+    background-color: red; /* Naranja */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    border:2px solid white;
+}
+/*Register*/
+.register-container {
+    background-color: #1c314c; /* Color de fondo blanco */
+    color: white; /* Color de texto negro */
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.register-title {
+    text-align: center;
+    color: white; /* Negro */
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.register-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.register-form-group label {
+    text-align: left;
+    width: 100%;
+    color: white; /* Negro */
+}
+
+.register-form-group input {
+    margin: 10px 0;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.register-button {
+    background-color: #ff7f00; /* Naranja */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
 }
