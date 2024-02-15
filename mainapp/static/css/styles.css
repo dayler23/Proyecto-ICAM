@@ -108,7 +108,7 @@ nav > ul > li:hover > ul{
 }
 nav > ul > li:hover > ul > li{
    background: #1c314c;
-   border-bottom: 3px solid #5ac7f0;
+   border-bottom: 1px solid #f2901a;
    padding: 8px;
    line-height:25px ;
    font-size: 18px;   
@@ -649,3 +649,11 @@ footer{
     cursor: pointer;
     border-radius: 5px;
 }
+/*btn añadir area*/
+.btn-add {
+    display: block; /* Hace que el enlace ocupe toda la fila */
+    
+    text-align: center; /* Centrado */
+    padding: 10px; /* Espaciado */
+}
+
