@@ -657,3 +657,39 @@ footer{
     padding: 10px; /* Espaciado */
 }
 
+/*detail.html*/
+
+
+.position-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centra el contenido verticalmente */
+    padding: 20px;
+}
+
+.position-image {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centra la imagen horizontalmente */
+}
+
+.position-info {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra la información verticalmente */
+}
+
+.small-image {
+    width: 50%; /* Ajusta este valor según el tamaño que desees */
+    border-radius: 20px; /* Añade bordes curvos a la imagen */
+    transition: transform 2s; /* Añade una transición al transformar la imagen */
+}
+
+.small-image:hover {
+    transform: scale(1.1); /* Aumenta el tamaño de la imagen en un 10% cuando se pasa el cursor por encima */
+}
+
+.position-info .title {
+    text-align: center; /* Centra el nombre de la posición */
+}

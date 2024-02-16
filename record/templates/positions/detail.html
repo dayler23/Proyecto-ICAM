@@ -3,30 +3,23 @@
 {% block title %} {{position.name}} {%endblock%}
 
 {%block content%}
-  
-{%if position.image != 'null' %}
+<div class="position-container">
+    <div class="position-image">
+        {%if position.image != 'null' %}
+        <img class="small-image" src="{{position.image.url}}"/>
+        {%endif%}
+    </div>
 
-        <div class="image">
-   
-                <img src="{{position.image.url}}"/>
-         </div>
-{%endif%}
+    <div class="position-info">
+        <h1 class="title">{{position.name}}</h1>
+        <span class="date"> {{position.created_at}}</span>
 
-<h1 class="title">{{position.name}}</h1>
-<span class="date"> {{position.created_at}}</span>
-
-<p class="content">
-    AREA:</br>{{position.area}}
-    
-</p>
-<p class="content">
-    
-    TIPO DE ACTIVIDAD:{{position.activity_type|safe}}
-</p>
-
-
-
-
-
-
+        <p class="content">
+            <strong>ÁREA:</strong></br>{{position.area}}
+        </p>
+        <p class="content">
+            <strong>TIPO DE ACTIVIDAD:</strong>{{position.activity_type|safe}}
+        </p>
+    </div>
+</div>
 {%endblock%}
