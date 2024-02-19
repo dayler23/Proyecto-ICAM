@@ -46,7 +46,15 @@
         
                             
         </form>
+       
     </div>
+   <!-- Añade esto después de tu formulario de búsqueda -->
+   {% if searched %}
+   <div style="display: flex; justify-content: center; margin-top: 20px;">
+       <button id="viewAllButton" class="form-button" style="padding: 10px;" onclick="window.location.replace('{% url 'inicio' %}');">Ver todas las empresas</button>
+   </div>
+{% endif %}
+
 {% endif %}
 
 {% for company in companies %}

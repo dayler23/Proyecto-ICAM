@@ -47,7 +47,12 @@
                 <!-- Aquí puedes agregar una imagen o un marcador de posición si es necesario -->
                 <div class="data">
                     <h3>{{ area.name }}</h3>
-                    <p>{{ area.description }}</p>
+                    <p>{{ area.description }}
+                        
+                    </p>
+                    <p>
+                        {{ area.created_at }}
+                    </p>
                     {% if user.is_superuser %}
                         <!-- Botones de eliminar y editar -->
                         <div style="display: block; justify-content: flex-end; flex-direction: column;">

@@ -137,11 +137,13 @@ def edit_company(request, company_id):
     else:
         form = CompanyForm(instance=company)
     return render(request, 'mainapp/edit_company.html', {'form': form})
-
+ 
 def search_company(request):
     query = request.GET.get('q')
+    searched = False
     if query:
-        companies = Company.objects.filter(Q(name__icontains=query) | Q(address__icontains=query))
+        companies = Company.objects.filter(name__icontains=query)
+        searched = True
     else:
         companies = Company.objects.all()
-    return render(request, 'mainapp/index.html', {'companies': companies})
+    return render(request, 'mainapp/index.html', {'companies': companies, 'searched': searched})
