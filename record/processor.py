@@ -7,6 +7,7 @@ def get_areas(request):
             areas = Area.objects.filter(company=company).values_list('id', 'name')
             return {
                 'areas': areas,
+                'selected_company_id': request.session['selected_company_id'],  # Agrega esta línea
             }
         except Company.DoesNotExist:
             return {
@@ -16,3 +17,4 @@ def get_areas(request):
         return {
             'areas': [],
         }
+

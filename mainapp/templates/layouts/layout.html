@@ -37,7 +37,7 @@
             </li>
             {%if user.email%}
                 <li>
-                    <a href="{%url 'list_positions'%}"><i class="fas fa-map-marker-alt"></i>Areas</a>
+                    <a href="{% url 'company_areas' selected_company_id %}"><i class="fas fa-map-marker-alt"></i>Áreas</a>
                   
                 </li>
                         
