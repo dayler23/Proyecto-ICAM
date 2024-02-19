@@ -38,15 +38,7 @@
             {%if user.email%}
                 <li>
                     <a href="{%url 'list_positions'%}"><i class="fas fa-map-marker-alt"></i>Areas</a>
-                    <ul>
-                        {% for area in areas %}
-                        <li>
-                        <a href="{%url 'area' area.0 %}">{{area.1}}</a>
-                        </li>
-                        {% endfor %} 
-                        
-                        
-                    </ul>
+                  
                 </li>
                         
                 {% for page in pages %}

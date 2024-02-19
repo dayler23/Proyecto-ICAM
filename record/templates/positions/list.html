@@ -1,4 +1,3 @@
-<!-- acceso a objetos de los views y views accede a la base de datos-->
 {% extends "layouts/layout.html" %}
 
 {% block title %} {{title}} {%endblock%}
@@ -7,8 +6,28 @@
 
 <h1 class="title">{{title}}</h1>
 
-{% include "positions/positions.html"  %}
-{% include "positions/pagination.html"  %}
+{% if user.is_superuser %}
+    <!-- Botón de añadir área -->
+    <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Área</button>
+    <!-- Aquí puedes agregar el formulario para añadir una nueva área -->
+{% endif %}
+
+{% for area in areas %}
+    {% if area.0 %}
+        <div style="border: 1px solid #333; padding: 10px; margin: 10px;">
+            <h3><a href="{% url 'area' area.0 %}">{{ area.1 }}</a></h3>
+            <p>{{ area.description }}</p> <!-- Asegúrate de que 'description' es el nombre correcto del campo de descripción en tu modelo Area -->
+            {% if user.is_superuser %}
+                <!-- Botones de eliminar y editar -->
+                <a href="#">Editar</a> <!-- Asegúrate de que 'edit_area' es el nombre correcto de tu vista para editar áreas -->
+                <a href="#">Eliminar</a> <!-- Asegúrate de que 'delete_area' es el nombre correcto de tu vista para eliminar áreas -->
+            {% endif %}
+        </div>
+    {% else %}
+        <h3>No hay áreas disponibles para esta empresa.</h3>
+    {% endif %}
+{% endfor %}
+
 
 
 

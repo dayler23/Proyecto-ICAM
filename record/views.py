@@ -33,11 +33,11 @@ def list(request):
     areas = Area.objects.filter(company=selected_company)
 
     # Obtén solo los puestos de trabajo de esas áreas
-    positions = Position.objects.filter(area__in=areas)
+    
 
     return render(request, 'positions/list.html', {
-        'title': 'Puestos de Trabajo',
-        'positions': positions
+        'title': 'Areas',
+        
     })
 
 
@@ -88,6 +88,16 @@ def company_positions(request, company_id):
         'title': 'Puestos de Trabajo',
         'positions': positions
     })
+@login_required(login_url="login")
+def company_areas(request, company_id):
+    company = get_object_or_404(Company, id=company_id)
+    areas = Area.objects.filter(company=company).values_list('id', 'name')
+    request.session['selected_company_id'] = company.id
+    return render(request, 'positions/list.html', {
+        'title': 'Áreas',
+        'areas': areas
+    })
+
 
 #eliminar empresa en index
 @login_required

@@ -50,7 +50,7 @@
 {% endif %}
 
 {% for company in companies %}
-<a href="{% url 'company_positions' company.id %}" style="text-decoration: none; color: inherit;">
+<a href="{% url 'company_areas' company.id %}" style="text-decoration: none; color: inherit;">
     <div class="company-box">
         <div class="logo">
             <img src="{{ company.image.url }}" alt="{{ company.name }}">
