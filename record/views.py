@@ -37,6 +37,7 @@ def list(request):
 
     return render(request, 'positions/list.html', {
         'title': 'Areas',
+        'areas':areas
         
     })
 
@@ -91,12 +92,13 @@ def company_positions(request, company_id):
 @login_required(login_url="login")
 def company_areas(request, company_id):
     company = get_object_or_404(Company, id=company_id)
-    areas = Area.objects.filter(company=company).values_list('id', 'name')
+    areas = Area.objects.filter(company=company)
     request.session['selected_company_id'] = company.id
     return render(request, 'positions/list.html', {
         'title': 'Áreas',
         'areas': areas
     })
+
 
 
 #eliminar empresa en index
