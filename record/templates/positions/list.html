@@ -6,87 +6,126 @@
 
 <h1 class="title">{{title}}</h1>
 
-<!-- Botón para añadir área -->
 {% if user.is_superuser %}
    <!-- Botón de añadir área -->
 <button id="toggleAreaFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Área</button>
 
-<!-- Formulario -->
-<form action="{% url 'add_area' %}" method="post" id="addAreaForm" style="display: none;">
-    {% csrf_token %}
-    <label for="name">Nombre:</label>
-    <input type="text" id="name" name="name" autocomplete="name" required><br>
-    <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" required>
-    <input type="submit" value="Guardar">
-</form>
+<!-- Formulario de añadir área -->
+<div id="addAreaForm" class="modal">
+    <div class="modal-content">
+        <a href="#" id="closeAddAreaForm">X</a>
+        <form action="{% url 'add_area' %}" method="post">
+            {% csrf_token %}
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" autocomplete="name" required><br>
+            <label for="description">Descripción:</label>
+            <input type="text" id="description" name="description" required>
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="closeForm('addAreaForm')">Cancelar</button>
+        </form>
+    </div>
+</div>
 {% endif %}
-
 {% for area in areas %}
     {% if area.id %}
         <!-- Todo el cuadro es un botón que redirige a los puestos de trabajo de la área -->
-        <a href="{% url 'area' area.id%}" style="text-decoration: none; color: inherit;">
-            <article class="position-item">
-                <!-- Aquí puedes agregar una imagen o un marcador de posición si es necesario -->
-                <div class="data">
+        <div class="position-item">
+            <div class="data">
+                <a href="{% url 'area' area.id%}" style="text-decoration: none; color: inherit;">
                     <h3>{{ area.name }}</h3>
-                    <p>{{ area.description }}
-                        
-                    </p>
-                    <p>
-                        {{ area.created_at }}
-                    </p>
+                    <p>{{ area.description }}</p>
+                    <p>{{ area.created_at }}</p>
                 </a>
-                    {% if user.is_superuser %}
-                        <!-- Botones de eliminar y editar -->
-                        <div style="display: block; justify-content: flex-end; flex-direction: column;">
-                            <form action="{% url 'delete_area' area.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta área?');" style="display: inline;">
+                {% if user.is_superuser %}
+                <!-- Botones de eliminar y editar -->
+                <div style="display: block; justify-content: flex-end; flex-direction: column;">
+                    <form action="{% url 'delete_area' area.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta área?');" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer; width: 80px;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                    <!-- Botón de edición -->
+                    <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editAreaForm{{ area.id }}')">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+
+                    <!-- Formulario de edición -->
+                    <div id="editAreaForm{{ area.id }}" class="modal">
+                        <div class="modal-content">
+                            <a href="#" id="closeEditAreaForm{{ area.id }}">X</a>
+                            <form action="{% url 'edit_area' area.id %}" method="post">
                                 {% csrf_token %}
-                                <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer; width: 80px;">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <label for="name">Nombre:</label>
+                                <input type="text" id="name" name="name" value="{{ area.name }}" required><br>
+                                <label for="description">Descripción:</label>
+                                <input type="text" id="description" name="description" value="{{ area.description }}" required>
+                                <button type="submit">Guardar</button>
+                                <button type="button" onclick="closeForm('editAreaForm{{ area.id }}')">Cancelar</button>
                             </form>
-                        <!-- Botón de edición -->
-<button type="button" class="btn btn-primary" onclick="event.stopPropagation(); document.getElementById('editAreaForm{{ area.id }}').style.display = document.getElementById('editAreaForm{{ area.id }}').style.display == 'none' ? 'block' : 'none'">
-    <i class="fas fa-pencil-alt"></i>
-</button>
-
-                            <!-- Formulario de edición -->
-<form action="{% url 'edit_area' area.id %}" method="post" id="editAreaForm{{ area.id }}" style="display: none;">
-    {% csrf_token %}
-    <label for="name">Nombre:</label>
-    <input type="text" id="name" name="name" value="{{ area.name }}" required><br>
-    <label for="description">Descripción:</label>
-    <input type="text" id="description" name="description" value="{{ area.description }}" required>
-    <input type="submit" value="Guardar">
-</form>
-
-                            
-                                               
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
-                <div class="clearfix"></div>
-            </article>
-        
+            {% endif %}
+        </div>
+            </div>
+
     {% else %}
         <article class="position-item">
             <div class="data">
                 <h3>No hay áreas disponibles para esta empresa.</h3>
             </div>
-            <div class="clearfix"></div>
         </article>
     {% endif %}
 {% endfor %}
+
 <script>
-    document.getElementById('toggleAreaFormButton').addEventListener('click', function() {
-        var form = document.getElementById('addAreaForm');
-        if (form.style.display === 'none') {
-            form.style.display = 'block';
-        } else {
-            form.style.display = 'none';
+window.onload = function() {
+    var modalAdd = document.getElementById('addAreaForm');
+    var btnAdd = document.getElementById('toggleAreaFormButton');
+    var closeAddLink = document.getElementById('closeAddAreaForm');
+
+    btnAdd.onclick = function() {
+        modalAdd.style.display = "block";
+    }
+
+    closeAddLink.onclick = function(e) {
+        e.preventDefault();
+        modalAdd.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modalAdd) {
+            modalAdd.style.display = "none";
         }
-    });
-    </script>
-    
+    }
+
+    {% for area in areas %}
+        {% if area.id %}
+            var modalEdit = document.getElementById('editAreaForm{{ area.id }}');
+            var closeEditLink = document.getElementById('closeEditAreaForm{{ area.id }}');
+
+            closeEditLink.onclick = function(e) {
+                e.preventDefault();
+                modalEdit.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modalEdit) {
+                    modalEdit.style.display = "none";
+                }
+            }
+        {% endif %}
+    {% endfor %}
+}
+
+function openForm(formId) {
+    document.getElementById(formId).style.display = 'block';
+}
+
+function closeForm(formId) {
+    document.getElementById(formId).style.display = 'none';
+}
+</script>
+
 {%endblock%}

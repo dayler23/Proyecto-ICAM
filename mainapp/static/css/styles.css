@@ -519,12 +519,7 @@ footer{
     
 }
 
-#close:hover,
-#close:focus {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
+
 
 /*LOGIN*/
 .login-container {
