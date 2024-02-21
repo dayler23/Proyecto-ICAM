@@ -156,3 +156,21 @@ def add_area(request):
 
         messages.success(request, "Área añadida con éxito")
         return redirect('company_areas', company_id=selected_company_id)
+
+#eliminar area
+@login_required(login_url="login")
+def delete_area(request, area_id):
+    # Obtén el área que se va a eliminar
+    area = get_object_or_404(Area, id=area_id)
+
+    # Verifica que el usuario tenga permiso para eliminar el área
+    if request.user.is_superuser:
+        # Guarda el ID de la empresa antes de eliminar el área
+        company_id = area.company.id
+        area.delete()
+        messages.success(request, "Área eliminada con éxito")
+        # Redirige al usuario a la lista de áreas de la empresa
+        return redirect('company_areas', company_id=company_id)
+    else:
+        messages.error(request, "No tienes permiso para eliminar esta área")
+        return redirect('index')

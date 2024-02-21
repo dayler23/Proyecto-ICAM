@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('empresa/<int:company_id>/areas', views.company_areas, name='company_areas'),
     path('añadir-area/', views.add_area, name='add_area'),
+    path('eliminar-area/<int:area_id>/', views.delete_area, name='delete_area'),
 
 ]
 
