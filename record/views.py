@@ -174,3 +174,22 @@ def delete_area(request, area_id):
     else:
         messages.error(request, "No tienes permiso para eliminar esta área")
         return redirect('index')
+    
+    #edit area
+@login_required(login_url="login")
+def edit_area(request, area_id):
+    # Obtén el área que se va a editar
+    area = get_object_or_404(Area, id=area_id)
+
+    if request.method == 'POST':
+        # Actualiza los datos del área con los datos del formulario
+        area.name = request.POST['name']
+        area.description = request.POST['description']
+        area.save()
+
+        messages.success(request, "Área editada con éxito")
+        return redirect('company_areas', company_id=area.company.id)
+
+    # Si la solicitud no es un POST, muestra la página de edición con el formulario
+    return render(request, 'edit_area.html', {'area': area})
+

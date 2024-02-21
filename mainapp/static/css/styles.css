@@ -204,7 +204,7 @@ nav > ul > li:hover > ul > li:hover a{
 .alert-success,
 .alert{
     padding: 20px;
-    
+    background-color: #1c314c;
     color: white;
     text-align: center;
     margin-bottom: 20px;
