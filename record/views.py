@@ -134,3 +134,25 @@ def search_company(request):
     else:
         companies = Company.objects.all()
     return render(request, 'mainapp/index.html', {'companies': companies, 'searched': searched})
+
+#añadir area
+@login_required(login_url="login")
+def add_area(request):
+    if request.method == 'POST':
+        # Obtén el ID de la empresa seleccionada de la sesión
+        selected_company_id = request.session.get('selected_company_id')
+
+        # Si no hay ninguna empresa seleccionada, muestra un mensaje de error
+        if selected_company_id is None:
+            messages.error(request, "Por favor, selecciona una empresa primero.")
+            return redirect('index')
+
+        # Obtén la empresa seleccionada
+        selected_company = get_object_or_404(Company, id=selected_company_id)
+
+        # Crea una nueva área con los datos del formulario
+        new_area = Area(name=request.POST['name'], description=request.POST['description'], company=selected_company)
+        new_area.save()
+
+        messages.success(request, "Área añadida con éxito")
+        return redirect('company_areas', company_id=selected_company_id)
