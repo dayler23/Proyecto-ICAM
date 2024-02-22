@@ -4,9 +4,12 @@
 
 {%block content%}
 
-<h1 class="title">{{title}}</h1>
+<h1 class="title">{{title}} - {{company.name}}</h1> 
 
+
+<p>{{ areas.count }} área(s) registradas en total.</p>
 {% if user.is_superuser %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
    <!-- Botón de añadir área -->
 <button id="toggleAreaFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Área</button>
 
@@ -23,9 +26,19 @@
             <button type="submit">Guardar</button>
             <button type="button" onclick="closeForm('addAreaForm')">Cancelar</button>
         </form>
+
     </div>
+  
 </div>
+  <!-- Formulario de búsqueda -->
+<form method="get" action="{% url 'search_area' %}" style="display: flex; align-items: center;">
+    <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 10px;">
+    <button class="form-button" type="submit" style="margin: 0; padding: 10px;"><i class="fas fa-search"></i></button>
+</form>
+</div>
+
 {% endif %}
+
 {% for area in areas %}
     {% if area.id %}
         <!-- Todo el cuadro es un botón que redirige a los puestos de trabajo de la área -->

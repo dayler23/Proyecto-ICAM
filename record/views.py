@@ -80,23 +80,17 @@ def position(request, position_id):
         'position': position
     })
 
-#muestra todos los puestos de la empresa seleccionada en el index
-def company_positions(request, company_id):
-    company = get_object_or_404(Company, id=company_id)
-    positions = Position.objects.filter(area__company=company)
-    request.session['selected_company_id'] = company.id
-    return render(request, 'positions/list.html', {
-        'title': 'Puestos de Trabajo',
-        'positions': positions
-    })
+
 @login_required(login_url="login")
 def company_areas(request, company_id):
     company = get_object_or_404(Company, id=company_id)
     areas = Area.objects.filter(company=company)
     request.session['selected_company_id'] = company.id
     return render(request, 'positions/list.html', {
-        'title': 'Áreas',
-        'areas': areas
+        'title': 'ÁREAS',
+        'areas': areas,
+        'company': company  # Pasa el objeto company a la plantilla
+        
     })
 
 
@@ -124,7 +118,7 @@ def edit_company(request, company_id):
     return render(request, 'mainapp/edit_company.html', {'form': form})
 
 
-#buscar
+#buscar empresa
 def search_company(request):
     query = request.GET.get('q')
     searched = False
@@ -175,7 +169,7 @@ def delete_area(request, area_id):
         messages.error(request, "No tienes permiso para eliminar esta área")
         return redirect('index')
     
-    #edit area
+#edit area
 @login_required(login_url="login")
 def edit_area(request, area_id):
     # Obtén el área que se va a editar
@@ -193,3 +187,19 @@ def edit_area(request, area_id):
     # Si la solicitud no es un POST, muestra la página de edición con el formulario
     return render(request, 'edit_area.html', {'area': area})
 
+#buscar area
+def search_area(request):
+    query = request.GET.get('q')
+    searched = False
+    if query:
+        areas = Area.objects.filter(name__icontains=query)
+        searched = True
+    else:
+        areas = Area.objects.all()
+
+    # Asegúrate de que cada área tiene un company_id válido.
+    for area in areas:
+        if not area.company_id:
+            raise ValueError(f"Area {area.id} does not have a valid company_id.")
+
+    return render(request, 'positions/list.html', {'areas': areas, 'searched': searched})

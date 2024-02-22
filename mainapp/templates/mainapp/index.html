@@ -19,7 +19,8 @@
     {% if user.is_superuser %}
     <div style="display: flex; align-items: center; justify-content: space-between;">
         <!-- Botón de añadir empresa -->
-        <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Empresa</button>        <div id="companyForm" class="modal">
+        <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Empresa</button>       
+         <div id="companyForm" class="modal">
             <div class="modal-content">
                 <a href="#" id="close">X</a>
                 <form method="post" enctype="multipart/form-data">
