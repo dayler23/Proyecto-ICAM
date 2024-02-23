@@ -202,4 +202,4 @@ def search_area(request):
         if not area.company_id:
             raise ValueError(f"Area {area.id} does not have a valid company_id.")
 
-    return render(request, 'positions/list.html', {'areas': areas, 'searched': searched})
+    return render(request, 'positions/list.html', {'title':'AREAS','areas': areas, 'searched': searched})
