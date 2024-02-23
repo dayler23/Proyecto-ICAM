@@ -7,9 +7,11 @@
 }
 
 
-.box p, .box h2, .box h3 ,.box ul{
+.box p,.box h1, .box h2, .box h3 ,.box ul{
     margin-top: 10px;
     margin-bottom: 15px;
+    color: white;
+    font-size: 30px;
 }
 .box ul, .box ol{
     margin-left: 20px;
@@ -33,7 +35,7 @@ header {
 /* para id # elementos unicos*/
 #logotipo {
     width: 100%;
-    height: 130px;
+    height: 140px;
     margin: auto;
     padding-top: 10px;
     display: flex;
@@ -42,8 +44,9 @@ header {
 }
 
 #logotipo img {
+    padding-top: 10px;
     display: block;
-    width: 250px;
+    width: 300px;
 }
 
 
@@ -51,15 +54,14 @@ header {
 /*Estilos barra de navegacion*/
 nav {
     width: 100%;
-    height: 40px;
+    height: 50px;
     margin: 0 auto;
     background-color: #1c314c;
     font-family: inherit;
-    
-    
-    /*box-shadow: 0px 22px 22px #01c6f3;
-    /*sombra x y difunado color*/
-    font-size: 25px;
+    border-bottom: 1px solid white;
+    text-decoration: none; 
+    color: inherit;
+    font-size: 30px;
     
 }
 
@@ -78,6 +80,7 @@ nav > ul > li > a {
     display: block;
     padding-right: 30px;
     padding-left: 30px;
+
     color: white;
     
 
@@ -85,52 +88,10 @@ nav > ul > li > a {
 
 /*efectos al pasar encima */
 nav > ul > li >a:hover {
-    background: #1c314c;
-   /* box-shadow: 0px 0px 15px  #f2911a4a inset;*/
-    color: white ;
-    border-bottom: 4px solid #f2901a;
-   
+background: #1c314c;
+   color: orange ; 
+   text-decoration: none;
 }
-
-nav > ul > li >ul {
-    display: none;
-    position: absolute;
-    color: white;
-    text-align: left;
-    width: 180px
-}
-
-nav > ul > li:hover > ul{
-    display: block;
-    margin: 0px;
-    color: white;
-    list-style: none;
-    
-}
-nav > ul > li:hover > ul > li{
-   background: #1c314c;
-   border-bottom: 1px solid #f2901a;
-   padding: 8px;
-   line-height:25px ;
-   font-size: 18px;   
-   transition: all 300ms; 
-}
-nav > ul > li:hover > ul > li a{
-    color: white;
-    transition: all 300ms; 
-}
-
-nav > ul > li:hover > ul > li:hover{
-    background-color: #f2901a;
-}
-
-nav > ul > li:hover > ul > li:hover a{
-   color: white;
-   display: block;
-}
-
-
-
 
 /*Estilo contenido central*/
 #content{
@@ -141,7 +102,7 @@ nav > ul > li:hover > ul > li:hover a{
     
 }
 .box{
-    background: white;
+    background: #1c314c;
     width: 95%;
     min-height: 930px;
     padding: 20px;
@@ -150,7 +111,7 @@ nav > ul > li:hover > ul > li:hover a{
     margin: 0 auto;
 }
 .box a{
-    color: #1c314c;
+    color: white;
 }
 .box a:hover{
     transition: all 100ms;
@@ -163,6 +124,7 @@ nav > ul > li:hover > ul > li:hover a{
     margin-right: 50px;
 
 }
+
 
 .box form{
     width: 40%; 
@@ -236,12 +198,12 @@ nav > ul > li:hover > ul > li:hover a{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    width: 70%;
+    width: 50%;
     margin: 20px auto;
     border-radius: 20px;
     padding: 20px;
-    box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.364);
-    background-color: rgba(28, 49, 76, 0.1);
+    box-shadow: 0px 10px 15px rgba(193, 152, 19, 0.26); /* Efecto de sombra celeste azul */
+    background-color: rgba(220, 240, 231, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
 }
 
 .position-item .image, .position-item .placeholder {
@@ -257,6 +219,7 @@ nav > ul > li:hover > ul > li:hover a{
     flex: 2;
     padding-left: 20px;
     align-self: center;
+    color: white;
 }
 
 .position-item img {
@@ -279,9 +242,7 @@ nav > ul > li:hover > ul > li:hover a{
     margin-top: 0;
 }
 
-.position-item p {
-    font-size: 14px;
-}
+
 
 .position-item p:nth-child(1) {
     font-weight: bold;
@@ -333,7 +294,7 @@ footer{
 .position-item span.date{
     display: block;
     font-size: 15px;
-    color: black;
+    color:white;
     margin-bottom: 10px;
     margin-top: 0px;
 }
@@ -341,7 +302,7 @@ footer{
 .position-item p{
     display: block;
     font-size: 15px;
-    color: #1c314c;
+    color: white;
     margin-bottom: 10px;
     font-size: 20px;
     
@@ -376,8 +337,8 @@ footer{
     border-radius: 20px;
     /*border-bottom: 1px solid #4c361c; /* Solo borde inferior */
     padding: 20px;
-    box-shadow: 0px 10px 15px rgba(28, 49, 76, 0.364); /* Efecto de sombra celeste azul */
-    background-color: rgba(28, 49, 76, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
+    box-shadow: 0px 10px 15px rgba(193, 152, 19, 0.26); /* Efecto de sombra celeste azul */
+    background-color: rgba(220, 240, 231, 0.1); /* Fondo de la tarjeta similar a la sombra pero más claro */
 }
 
 .company-box .logo {
@@ -412,7 +373,7 @@ footer{
 }
 
 .company-box p {
-    font-size: 14px; /* Dirección, sector y departamento en un tamaño más pequeño */
+    font-size:20px; /* Dirección, sector y departamento en un tamaño más pequeño */
 }
 
 .company-box p:nth-child(1) {
@@ -427,14 +388,14 @@ footer{
 
 /*aañdir empresa*/
 .form-button {
-    background-color: #1c314c; /* color de fondo */
+    background-color: white; /* color de fondo */
     border: none;
-    color: white; /* color del texto */
+    color: #1c314c; /* color del texto */
     padding: 15px 30px; /* tamaño del botón */
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 22px;
     margin: 4px;
     cursor: pointer;
     border-radius: 12px; /* bordes redondeados */
@@ -458,19 +419,6 @@ footer{
 /* Estilo para la ventana emergente */
 /*form añadir empresa*/
 /* Estilo para la ventana de fondo */
-.modal {
-    display: none; /* La ventana emergente está oculta por defecto */
-    position: fixed; /* Fija la ventana en la posición */
-    z-index: 1; /* Sitúa la ventana por encima de todo */
-    left: 0;
-    top: 0;
-    color:white;
-    width: 100%; /* Anchura completa */
-    height: 100%; /* Altura completa */
-    overflow: auto; /* Habilita el scroll si es necesario */
-    background-color: rgb(0,0,0); /* Color de fondo */
-    background-color: rgba(0,0,0,0.4); /* También se aplica color de fondo, pero con opacidad */
-}
 
 /* Estilo para la ventana emergente */
 .modal-content {
@@ -479,7 +427,7 @@ footer{
     margin: 15% auto; /* 15% desde arriba y centrado */
     padding: 20px;
     border: 3px solid #f2901a;
-    width: 30%; /* Podrías ajustar esto a lo que prefieras */
+    width: 40%; /* Podrías ajustar esto a lo que prefieras */
 }
 
 /* Estilo para el botón de cerrar */
@@ -493,23 +441,7 @@ footer{
     font-weight: bold;
     padding: 10px;
     border-radius: 20%;
-    
-}
-#closeEditAreaForm
-{
-        color: white;
-    background-color: rgba(255, 0, 0, 0.739);
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 20%;
-    
-}
-
-
+    }
 
 #close:hover,
 #close:focus {
@@ -539,7 +471,7 @@ footer{
 .login-container {
     background: #1c314c ;/* Azul oscuro */
     color: white;
-    max-width: 400px;
+    max-width: 500px;
     margin: auto;
     padding: 20px;
     border-radius: 5px;
@@ -547,6 +479,7 @@ footer{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 2px solid white;
 }
 
 
@@ -601,7 +534,7 @@ footer{
 .register-container {
     background-color: #1c314c; /* Color de fondo blanco */
     color: white; /* Color de texto negro */
-    max-width: 500px;
+    max-width: 600px;
     margin: auto;
     padding: 20px;
     border-radius: 5px;
@@ -609,6 +542,7 @@ footer{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 1px solid white;
 }
 
 
@@ -688,6 +622,8 @@ footer{
     flex-direction: column;
     justify-content: center; /* Centra la información verticalmente */
 }
+
+  
 
 .small-image {
     width: 50%; /* Ajusta este valor según el tamaño que desees */

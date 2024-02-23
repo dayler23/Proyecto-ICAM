@@ -32,8 +32,8 @@
 </div>
   <!-- Formulario de búsqueda -->
 <form method="get" action="{% url 'search_area' %}" style="display: flex; align-items: center;">
-    <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 10px;">
-    <button class="form-button" type="submit" style="margin: 0; padding: 10px;"><i class="fas fa-search"></i></button>
+    <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 15px; border-radius: 50px;">
+    <button class="form-button" type="submit" style="margin: 5px; padding: 8px;border:0;"><i class="fas fa-search"></i></button>
 </form>
 </div>
 
@@ -42,12 +42,18 @@
 {% for area in areas %}
     {% if area.id %}
         <!-- Todo el cuadro es un botón que redirige a los puestos de trabajo de la área -->
+        <a href="{% url 'area' area.id%}" style="text-decoration: none; color: inherit;">
+
         <div class="position-item">
+            <div class="logo">
+                <i class="fas fa-map" style="font-size: 8em; color: white;padding-left:10px;"></i>
+
+            </div>
             <div class="data">
-                <a href="{% url 'area' area.id%}" style="text-decoration: none; color: inherit;">
                     <h3>{{ area.name }}</h3>
-                    <p>{{ area.description }}</p>
                     <p>{{ area.created_at }}</p>
+                    <p>Descripcion: {{ area.description }}</p>
+                    
                 </a>
                 {% if user.is_superuser %}
                 <!-- Botones de eliminar y editar -->

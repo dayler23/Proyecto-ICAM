@@ -32,7 +32,7 @@ def index(request):
             messages.warning(request, "No tienes ninguna empresa asociada")
 
     return render(request, 'mainapp/index.html', {
-        'title': 'Inicio',
+        
         'companies': companies,
         'form': form,  # Pasa el formulario al contexto
     })

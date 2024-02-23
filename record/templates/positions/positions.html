@@ -9,25 +9,25 @@
         {%endif%}
 
         <div class="data">
-            <h3><a href="{%url 'position' position.id%}"> 
-                {{position.name}}
-            </a></h3>
+            <a href="{%url 'position' position.id%}" style="text-decoration: none; color: inherit;"> 
+                <h3>{{position.name}}
+            </h3>
             <span class="date"> {{position.created_at}}
             <p>
-                <strong>EMPRESA:</strong>{{position.area.company}}
+                <strong>EMPRESA:</strong> {{position.area.company}}
             </p>
             
                 
             </span>
             <p>
-                <strong>AREA:</strong>{{position.area}}{{position.company}}
-                
-            </p>
-            
-               
-            <p> <strong>ACTIVIDAD:</strong>{{position.activity_type|safe}}
+                <strong>AREA:</strong> {{position.area}}
+          </p>
+                           
+            <p> <strong>ACTIVIDAD:</strong> {{position.activity_type|safe}}
             </p>
         </div>
+        
+    </a>
         
         <div class="clearfix"></div>
         
