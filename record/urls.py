@@ -15,13 +15,12 @@ urlpatterns = [
     path('añadir-area/', views.add_area, name='add_area'),
     path('eliminar-area/<int:area_id>/', views.delete_area, name='delete_area'),
     path('editar-area/<int:area_id>/', views.edit_area, name='edit_area'),
-    path('search-area/', views.search_area, name='search_area'),
-    path('search-area/<int:company_id>/', views.search_area, name='search_area_company'),
+    path('search-area/<int:company_id>/', views.search_area, name='search_area'),
+
 
     path('añadir-puesto/<int:area_id>/añadir-puesto/', views.add_position, name='add_position'),
     path('eliminar-puesto/<int:area_id>/puesto/<int:position_id>/eliminar/', views.delete_position, name='delete_position'),
     path('editar-puesto/<int:area_id>/puesto/<int:position_id>/editar/', views.edit_position, name='edit_position'),
-    path('buscar-puesto/', views.search_position, name='search_position'),
     path('buscar-puesto/<int:area_id>/', views.search_position, name='search_position'),
 
 

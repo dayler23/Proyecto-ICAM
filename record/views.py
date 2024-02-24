@@ -188,22 +188,20 @@ def edit_area(request, area_id):
     # Si la solicitud no es un POST, muestra la página de edición con el formulario
     return render(request, 'edit_area.html', {'area': area})
 
-#buscar area
-def search_area(request):
+#buscar area:
+
+@login_required(login_url="login")
+def search_area(request, company_id):
     query = request.GET.get('q')
     searched = False
+    company = Company.objects.get(id=company_id)
     if query:
-        areas = Area.objects.filter(name__icontains=query)
+        areas = Area.objects.filter(Q(name__istartswith=query), company_id=company.id)
         searched = True
     else:
-        areas = Area.objects.all()
+        areas = Area.objects.filter(company_id=company.id)
 
-    # Asegúrate de que cada área tiene un company_id válido.
-    for area in areas:
-        if not area.company_id:
-            raise ValueError(f"Area {area.id} does not have a valid company_id.")
-
-    return render(request, 'positions/list.html', {'title':'AREAS','areas': areas, 'searched': searched})
+    return render(request, 'positions/list.html', {'areas': areas, 'company': company, 'searched': searched})
 
 #añadir puesto
 @login_required(login_url="login")
