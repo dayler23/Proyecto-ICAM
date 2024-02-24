@@ -17,6 +17,9 @@ urlpatterns = [
     path('editar-area/<int:area_id>/', views.edit_area, name='edit_area'),
     path('search-area/', views.search_area, name='search_area'),
     path('search-area/<int:company_id>/', views.search_area, name='search_area_company'),
+
+    path('area/<int:area_id>/añadir-puesto/', views.add_position, name='add_position'),
+
 ]
 
 

@@ -1,3 +1,40 @@
+
+
+
+
+
+{% if user.is_superuser %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+   <!-- Botón de añadir puesto -->
+<button id="togglePositionFormButton" class="form-button" style="margin: 0; padding: 10px;" onclick="openForm('addPositionForm')">Añadir Puesto</button>
+
+<!-- Formulario de añadir puesto -->
+<div id="addPositionForm" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm('addPositionForm')">×</span>
+        <form action="{% url 'add_position' area.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" autocomplete="name" required><br>
+            <label for="activity_type">Tipo de Actividad:</label>
+            <input type="text" id="activity_type" name="activity_type" required>
+            <label for="image">Imagen:</label>
+            <input type="file" id="image" name="image">
+            <label for="public">Publicado:</label>
+            <input type="checkbox" id="public" name="public">
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
+
+  <!-- Formulario de búsqueda -->
+<form method="get" action="#" style="display: flex; align-items: center;">
+    <input type="text" name="q" placeholder="Buscar puesto" style="margin: 0; padding: 15px; border-radius: 50px;">
+    <button class="form-button" type="submit" style="margin: 5px; padding: 8px;border:0;"><i class="fas fa-search"></i></button>
+</form>
+</div>
+
+{% endif %}
 {% for position in positions%}
     <article class="position-item">
         {%if position.image != 'null' %}
@@ -10,22 +47,37 @@
 
         <div class="data">
             <a href="{%url 'position' position.id%}" style="text-decoration: none; color: inherit;"> 
-                <h3>{{position.name}}
-            </h3>
-            <span class="date"> {{position.created_at}}
-            <p>
-                <strong>EMPRESA:</strong> {{position.area.company}}
-            </p>
-            
-                
-            </span>
-            <p>
-                <strong>AREA:</strong> {{position.area}}
-          </p>
-                           
-            <p> <strong>ACTIVIDAD:</strong> {{position.activity_type|safe}}
-            </p>
+                <h3>{{position.name}} </h3>
+            <span class="date"> {{position.created_at}}</span>
+            <p><strong>EMPRESA:</strong> {{position.area.company}}</p>
+            <p><strong>AREA:</strong> {{position.area}} </p>           
+            <p> <strong>ACTIVIDAD:</strong> {{position.activity_type|safe}}</p>
         </div>
+        {% if user.is_superuser %}
+            <div style="display: block; justify-content: flex-end; flex-direction: column;">
+                <!-- Botón de edición -->
+                <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editPositionForm{{ position.id }}')">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <!-- Formulario de eliminación -->
+                <form action="#" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este puesto?');" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer; width: 80px;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+            <div id="editPositionForm{{ position.id }}" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeForm('editPositionForm{{ position.id }}')">×</span>
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- ... campos del formulario ... -->
+                        <button type="submit">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
         
     </a>
         
@@ -33,3 +85,13 @@
         
     </article>     
 {% endfor %}
+<script>
+    function openForm(formId) {
+        document.getElementById(formId).style.display = 'block';
+    }
+
+    function closeForm(formId) {
+        document.getElementById(formId).style.display = 'none';
+    }
+</script>
+

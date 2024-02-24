@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from record.forms import AreaForm  # Importa el formulario de área
 from mainapp.forms import CompanyForm
+from .forms import PositionForm
 from django.contrib import messages
 from django.urls import reverse 
 from django.db.models import Q
@@ -203,3 +204,24 @@ def search_area(request):
             raise ValueError(f"Area {area.id} does not have a valid company_id.")
 
     return render(request, 'positions/list.html', {'title':'AREAS','areas': areas, 'searched': searched})
+
+#añadir area
+@login_required(login_url="login")
+def add_position(request, area_id):
+    # Obtén el área que se ha seleccionado previamente
+    area = get_object_or_404(Area, id=area_id)
+
+    if request.method == 'POST':
+        form = PositionForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Crea un nuevo puesto con los datos del formulario y el área seleccionada
+            new_position = form.save(commit=False)
+            new_position.area = area
+            new_position.save()
+
+            messages.success(request, "Puesto añadido con éxito")
+            return redirect('area', area_id=area_id)
+    else:
+        form = PositionForm()
+
+    return render(request, 'add_position.html', {'form': form})
