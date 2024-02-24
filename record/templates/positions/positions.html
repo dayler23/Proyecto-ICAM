@@ -55,7 +55,9 @@
             <p> <strong>PUBLICADO:</strong> {{position.public}}</p>
 
         </div>
-        {% if user.is_superuser %}
+        
+    </a>
+    {% if user.is_superuser %}
             <div style="display: block; justify-content: flex-end; flex-direction: column;">
                 <!-- Botón de edición -->
                 <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editPositionForm{{ position.id }}')">
@@ -74,16 +76,22 @@
             <div id="editPositionForm{{ position.id }}" class="modal">
                 <div class="modal-content">
                     <span class="close" onclick="closeForm('editPositionForm{{ position.id }}')">×</span>
-                    <form action="#" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <!-- ... campos del formulario ... -->
+                    <form action="{% url 'edit_position' position.area.id position.id %}" method="post" enctype="multipart/form-data">                        {% csrf_token %}
+                        <label for="name">Nombre:</label>
+                        <input type="text" id="name" name="name" value="{{ position.name }}" required><br>
+                        <label for="activity_type">Tipo de Actividad:</label>
+                        <input type="text" id="activity_type" name="activity_type" value="{{ position.activity_type }}" required>
+                        <label for="image">Imagen:</label>
+                        <input type="file" id="image" name="image">
+                        <label for="public">Publicado:</label>
+                        <input type="checkbox" id="public" name="public" {% if position.public %}checked{% endif %}>
                         <button type="submit">Guardar</button>
                     </form>
                 </div>
             </div>
+            
         {% endif %}
         
-    </a>
         
         <div class="clearfix"></div>
         

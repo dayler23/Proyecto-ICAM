@@ -241,3 +241,25 @@ def delete_position(request, area_id, position_id):
     else:
         messages.error(request, "No tienes permiso para eliminar este puesto")
         return redirect('index')
+#edit position 
+@login_required(login_url="login")
+def edit_position(request, area_id, position_id):
+    # Obtén el puesto que se va a editar
+    position = get_object_or_404(Position, id=position_id)
+
+    # Verifica que el usuario tenga permiso para editar el puesto
+    if request.user.is_superuser or request.user == position.area.company.user:
+        if request.method == 'POST':
+            form = PositionForm(request.POST, request.FILES, instance=position)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Puesto editado con éxito")
+                # Redirige al usuario a la lista de puestos de la área
+                return redirect('area', area_id=position.area.id)
+        else:
+            form = PositionForm(instance=position)
+    else:
+        messages.error(request, "No tienes permiso para editar este puesto")
+        return redirect('index')
+
+    return render(request, 'edit_position.html', {'form': form})
