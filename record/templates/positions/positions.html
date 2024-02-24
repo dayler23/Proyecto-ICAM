@@ -1,7 +1,7 @@
 
 
 
-
+<p>{{ positions.count }} Puestos(s) registradas en total.</p>
 
 {% if user.is_superuser %}
 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -12,6 +12,7 @@
 <div id="addPositionForm" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeForm('addPositionForm')">×</span>
+        {% if area %}
         <form action="{% url 'add_position' area.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="name">Nombre:</label>
@@ -24,14 +25,23 @@
             <input type="checkbox" id="public" name="public">
             <button type="submit">Guardar</button>
         </form>
+        {% else %}
+    <p>Por favor, selecciona un área antes de añadir un puesto.</p>
+{% endif %}
     </div>
 </div>
 
   <!-- Formulario de búsqueda -->
-<form method="get" action="#" style="display: flex; align-items: center;">
+  <form method="get" action="{% url 'search_position' area.id %}" style="display: flex; align-items: center;">
     <input type="text" name="q" placeholder="Buscar puesto" style="margin: 0; padding: 15px; border-radius: 50px;">
     <button class="form-button" type="submit" style="margin: 5px; padding: 8px;border:0;"><i class="fas fa-search"></i></button>
-</form>
+    </form>
+
+{% if searched %}
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <button id="viewAllButton" class="form-button" onclick="window.location.replace('{% url 'area' area.id %}');">Ver todos los puestos de esta área</button>
+</div>
+    {% endif %}
 </div>
 
 {% endif %}

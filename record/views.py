@@ -205,7 +205,7 @@ def search_area(request):
 
     return render(request, 'positions/list.html', {'title':'AREAS','areas': areas, 'searched': searched})
 
-#añadir area
+#añadir puesto
 @login_required(login_url="login")
 def add_position(request, area_id):
     # Obtén el área que se ha seleccionado previamente
@@ -263,3 +263,19 @@ def edit_position(request, area_id, position_id):
         return redirect('index')
 
     return render(request, 'edit_position.html', {'form': form})
+#buscar puesto:
+from django.db.models import Q
+
+def search_position(request, area_id):
+    query = request.GET.get('q')
+    searched = False
+    area = Area.objects.get(id=area_id)
+    if query:
+        positions = Position.objects.filter(Q(name__istartswith=query), area_id=area.id)
+        searched = True
+    else:
+        positions = Position.objects.filter(area_id=area.id)
+
+    return render(request, 'areas/area.html', {'positions': positions, 'area': area, 'searched': searched})
+
+
