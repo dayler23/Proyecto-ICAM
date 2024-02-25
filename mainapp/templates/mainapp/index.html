@@ -64,10 +64,10 @@
             <img src="{{ company.image.url }}" alt="{{ company.name }}">
         </div>
         <div class="company-info">
-            <h2>{{company.name}}</h2>
-            <p>Departamento: {{ company.department}}</p>
-            <p>Direccion: {{company.address}}</p>
-            <p>Rubro: {{company.sector}}</p>
+            <h2 style="text-transform: uppercase;">{{company.name}}</h2>
+            <p class="department">Departamento: {{ company.department}}</p>
+            <p class="address">Direccion: {{company.address}}</p>
+            <p class="sector">Rubro: {{company.sector}}</p>
             {% if user.is_superuser %}
         <!-- Botones de eliminación y edición -->
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
@@ -96,6 +96,7 @@
     <h2>Identificate para ver mas cosas</h2>
 
 {%endif%}
+
 <script>
     window.onload = function() {
         var modal = document.getElementById('companyForm');
@@ -116,8 +117,37 @@
                 modal.style.display = "none";
             }
         }
+
+        /*remplazar barra baja*/
+        let departments = document.getElementsByClassName('department');
+
+        for (let i = 0; i < departments.length; i++) {
+            let department = departments[i].innerText.replace('Departamento: ', ''); // Elimina 'Departamento: '
+            department = department.replace(/_/g, ' '); // Reemplaza los guiones bajos por espacios
+            department = department.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' '); // Convierte la primera letra de cada palabra en mayúscula
+            departments[i].innerText = `Departamento: ${department}`; // Actualiza el texto del elemento
+        }
+        /* Capitalizar sector */
+    let sectors = document.getElementsByClassName('sector');
+
+    for (let i = 0; i < sectors.length; i++) {
+        let sector = sectors[i].innerText.replace('Rubro: ', ''); // Elimina 'Rubro: '
+        sector = sector.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
+        sectors[i].innerText = `Rubro: ${sector}`; // Actualiza el texto del elemento
+    }
+    /* Formatear dirección */
+let addresses = document.getElementsByClassName('address');
+
+for (let i = 0; i < addresses.length; i++) {
+    let address = addresses[i].innerText.replace('Direccion: ', ''); // Elimina 'Direccion: '
+    address = address.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
+    addresses[i].innerText = `Direccion: ${address}`; // Actualiza el texto del elemento
+}
+
+        
     }
 </script>
+
     
 
 {%endblock%}

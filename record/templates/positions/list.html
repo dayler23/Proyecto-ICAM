@@ -4,7 +4,7 @@
 
 {%block content%}
 
-<h1 class="title"> {{title}} DE {{company.name}} </h1> 
+<h1 class="title" style="text-transform: uppercase;"> {{title}} DE: {{company.name}} </h1>
 
 
 
@@ -61,8 +61,7 @@
                     <h3>{{ area.name }}</h3>
                     <p>{{ area.created_at }}</p>
                     <p>Descripcion: {{ area.description }}</p>
-                    <p>Descripcion: {{ area.company }}</p>
-
+                    <p class="companyName" style="text-transform: capitalize;">Empresa: {{ area.company }}</p>
                     
                 </a>
                 {% if user.is_superuser %}
@@ -155,6 +154,18 @@ function openForm(formId) {
 function closeForm(formId) {
     document.getElementById(formId).style.display = 'none';
 }
+/*CAPITALIZAR  TEXT*/
+function capitalizeWords(str) {
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var companyNames = document.getElementsByClassName('companyName');
+    for (var i = 0; i < companyNames.length; i++) {
+      companyNames[i].textContent = capitalizeWords(companyNames[i].textContent);
+    }
+  });
 </script>
 
 {%endblock%}
