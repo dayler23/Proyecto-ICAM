@@ -9,9 +9,10 @@
 
 
 <p>{{ areas.count }} área(s) registradas en total.</p>
-{% if user.is_superuser %}
 <div style="display: flex; justify-content: space-between; align-items: center;">
-   <!-- Botón de añadir área -->
+    {% if user.is_superuser %}
+  
+    <!-- Botón de añadir área -->
 <button id="toggleAreaFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Área</button>
 
 <!-- Formulario de añadir área -->
@@ -31,6 +32,7 @@
     </div>
   
 </div>
+{% endif %}
   <!-- Formulario de búsqueda -->
   <form method="get" action="{% url 'search_area' company.id %}" style="display: flex; align-items: center;">
     <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 15px; border-radius: 50px;">
@@ -45,7 +47,7 @@
 
 </div>
 
-{% endif %}
+
 
 {% for area in areas %}
     {% if area.id %}

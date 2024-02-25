@@ -15,8 +15,9 @@
     <h2>Bienvenido, {{request.user.first_name}} {{user.last_name}}</h2>
     
     <p>{{ companies.count }} Empresa(s) registradas en total.</p>
-    {% if user.is_superuser %}
+    
     <div style="display: flex; align-items: center; justify-content: space-between;">
+        {% if user.is_superuser %}
         <!-- Botón de añadir empresa -->
         <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Empresa</button>       
          <div id="companyForm" class="modal">
@@ -40,6 +41,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
         <!-- Formulario de búsqueda -->
         <form method="get" action="{% url 'search_company' %}" style="display: flex; align-items: center;">
             <input type="text" name="q" placeholder="Buscar empresa" style="margin: 5px; padding: 15px; border-radius: 50px;">
@@ -57,7 +59,7 @@
    </div>
 {% endif %}<!--search -->
 
-{% endif %}
+
 
 {% for company in companies %}
 <a href="{% url 'company_areas' company.id %}" style="text-decoration: none; color: inherit;">
