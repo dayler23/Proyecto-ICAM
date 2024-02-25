@@ -33,6 +33,7 @@
                             {% if field.help_text %}
                             <p class="help">{{ field.help_text }}</p>
                             {% endif %}
+                            
                         </div>
                     {% endfor %}
                     <button class="form-button" type="submit">Guardar</button>
@@ -49,11 +50,12 @@
        
     </div>
    <!-- Añade esto después de tu formulario de búsqueda -->
-   {% if searched %}
+   {% if searched %}   <!--search -->
+
    <div style="display: flex; justify-content: center; margin-top: 20px;">
        <button id="viewAllButton" class="form-button" onclick="window.location.replace('{% url 'inicio' %}');">Ver todas las empresas</button>
    </div>
-{% endif %}
+{% endif %}<!--search -->
 
 {% endif %}
 
@@ -68,7 +70,7 @@
             <p class="department">Departamento: {{ company.department}}</p>
             <p class="address">Direccion: {{company.address}}</p>
             <p class="sector">Rubro: {{company.sector}}</p>
-            {% if user.is_superuser %}
+            {% if user.is_superuser %} <!--super user-->
         <!-- Botones de eliminación y edición -->
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
             <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');" style="display: inline;">
@@ -85,42 +87,43 @@
     
         </div>
     </a>
-        {% endif %}
+        {% endif %}<!--super user-->
         </div>
         
     </div>
 </a>
-{% endfor %}
+{% endfor %}<!--box-->
 
-{% else %}
+{% else %}<!--email-->
     <h2>Identificate para ver mas cosas</h2>
 
-{%endif%}
+{%endif%} <!--email-->
 
 <script>
     window.onload = function() {
         var modal = document.getElementById('companyForm');
         var btn = document.getElementById('toggleFormButton');
         var closeLink = document.getElementById('close');
-
+        var form = document.getElementById('companyForm'); // Asegúrate de que este es el id correcto de tu formulario
+    
         btn.onclick = function() {
             modal.style.display = "block";
         }
-
+    
         closeLink.onclick = function(e) {
             e.preventDefault();
             modal.style.display = "none";
         }
-
+    
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
+    
         /*remplazar barra baja*/
         let departments = document.getElementsByClassName('department');
-
+    
         for (let i = 0; i < departments.length; i++) {
             let department = departments[i].innerText.replace('Departamento: ', ''); // Elimina 'Departamento: '
             department = department.replace(/_/g, ' '); // Reemplaza los guiones bajos por espacios
@@ -128,26 +131,40 @@
             departments[i].innerText = `Departamento: ${department}`; // Actualiza el texto del elemento
         }
         /* Capitalizar sector */
-    let sectors = document.getElementsByClassName('sector');
-
-    for (let i = 0; i < sectors.length; i++) {
-        let sector = sectors[i].innerText.replace('Rubro: ', ''); // Elimina 'Rubro: '
-        sector = sector.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
-        sectors[i].innerText = `Rubro: ${sector}`; // Actualiza el texto del elemento
-    }
-    /* Formatear dirección */
-let addresses = document.getElementsByClassName('address');
-
-for (let i = 0; i < addresses.length; i++) {
-    let address = addresses[i].innerText.replace('Direccion: ', ''); // Elimina 'Direccion: '
-    address = address.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
-    addresses[i].innerText = `Direccion: ${address}`; // Actualiza el texto del elemento
-}
-
-        
-    }
-</script>
-
+        let sectors = document.getElementsByClassName('sector');
     
-
+        for (let i = 0; i < sectors.length; i++) {
+            let sector = sectors[i].innerText.replace('Rubro: ', ''); // Elimina 'Rubro: '
+            sector = sector.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
+            sectors[i].innerText = `Rubro: ${sector}`; // Actualiza el texto del elemento
+        }
+        /* Formatear dirección */
+        let addresses = document.getElementsByClassName('address');
+    
+        for (let i = 0; i < addresses.length; i++) {
+            let address = addresses[i].innerText.replace('Direccion: ', ''); // Elimina 'Direccion: '
+            address = address.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase()); // Convierte la primera letra de cada palabra en mayúscula
+            addresses[i].innerText = `Direccion: ${address}`; // Actualiza el texto del elemento
+        }
+    
+        form.onsubmit = function(e) {
+            var companyName = document.getElementById('CompanyNameId').value; // Asegúrate de que este es el id correcto de tu input de nombre de empresa
+            var address = document.getElementById('AddressId').value; // Asegúrate de que este es el id correcto de tu input de dirección
+            var sector = document.getElementById('SectorId').value; // Asegúrate de que este es el id correcto de tu input de sector
+    
+            if (companyName.length < 4 || !isNaN(companyName)) {
+                alert('El nombre de la empresa debe tener al menos 4 caracteres y no puede ser solo número');
+                e.preventDefault();
+            } else if (address.length < 5 || !isNaN(address)) {
+                alert('La dirección debe tener al menos 5 caracteres y no puede ser solo número');
+                e.preventDefault();
+            } else if (sector.length < 4 ||  /[^a-zA-Z\s]/g.test(sector)){
+                alert('El sector debe tener al menos 4 caracteres y no puede ser solo número');
+                e.preventDefault();
+            }
+        }
+    }
+    
+</script>
+    
 {%endblock%}

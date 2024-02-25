@@ -12,7 +12,10 @@
     margin-bottom: 15px;
     color: white;
     font-size: 30px;
+
 }
+
+
 .box ul, .box ol{
     margin-left: 20px;
     margin-bottom: 20px;
@@ -376,6 +379,7 @@ footer{
     font-size:20px; /* Dirección, sector y departamento en un tamaño más pequeño */
 }
 
+
 .company-box p:nth-child(1) {
     font-weight: bold; /* Hace que el texto sea negrita */
     font-size: 20px; /* Aumenta el tamaño de la fuente */
@@ -638,3 +642,6 @@ footer{
 .position-info .title {
     text-align: center; /* Centra el nombre de la posición */
 }
+.sector:first-letter {
+    text-transform: uppercase;
+  }

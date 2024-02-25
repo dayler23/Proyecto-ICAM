@@ -23,4 +23,9 @@ class CompanyForm(forms.ModelForm):
             'image':'Logo',
             'user':'Usuario Encargado'
         }
-
+        widgets = {
+            'name': forms.TextInput(attrs={'id': 'CompanyNameId'}),
+            'sector': forms.TextInput(attrs={'id': 'SectorId'}),
+            'address': forms.TextInput(attrs={'id': 'AddressId'}),
+            # Agrega aquí los demás campos si es necesario
+        }
