@@ -8,7 +8,7 @@ urlpatterns = [
     path('puesto/<int:position_id>',views.position,name="position"),
     path('eliminar-empresa/<int:company_id>/', views.delete_company, name='delete_company'),
     path('editar-empresa/<int:company_id>/', views.edit_company, name='edit_company'),
-    path('search/', views.search_company, name='search_company'),
+    path('search-empresa/<int:user_id>/', views.search_company, name='search_company'),
 
     path('empresa/<int:company_id>/areas', views.company_areas, name='company_areas'),
 

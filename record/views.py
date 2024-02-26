@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 
 #IMPORTACION DE MODELOS PARA OBTENER DATOS
 from record.models import Company,Area,Position
+from django.contrib.auth.models import User
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -54,6 +55,9 @@ def list(request):
 def area(request,area_id):
     #crea pagina de cada area
     area=get_object_or_404(Area,id=area_id)
+    # Si el usuario no es superusuario, asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
+    if not request.user.is_superuser and area.company.user != request.user:
+        return HttpResponseForbidden("No tienes permiso para ver esta area.")
 
     # Obtén el ID de la empresa seleccionada de la sesión
     company_id = request.session.get('selected_company_id')
@@ -120,15 +124,19 @@ def edit_company(request, company_id):
 
 
 #buscar empresa
-def search_company(request):
+def search_company(request,user_id):
     query = request.GET.get('q')
     searched = False
+    user = User.objects.get(id=user_id)
+
     if query:
-        companies = Company.objects.filter(name__icontains=query)
+        companies = Company.objects.filter(Q(name__icontains=query),user_id=user.id)
         searched = True
     else:
-        companies = Company.objects.all()
-    return render(request, 'mainapp/index.html', {'companies': companies, 'searched': searched})
+        companies = Company.objects.filter(user_id=user.id)
+    return render(request, 'mainapp/index.html', {'companies': companies,'user':user, 'searched': searched})
+    
+
 
 #añadir area
 @login_required(login_url="login")
