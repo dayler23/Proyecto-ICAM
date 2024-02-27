@@ -6,13 +6,14 @@
 {% if messages %}
     {%for message in messages%}
     <div class="alert alert-success">
-        {{message}}
+        
+        <strong>{{message}}</strong>
     </div>
     {%endfor%}
 {% endif %}
 
 {%if user.email%}
-    <h2>Bienvenido, {{request.user.first_name}} {{user.last_name}}</h2>
+    <h2>Bienvenido:{{request.user.first_name}} {{user.last_name}}</h2>
     
     <p>{{ companies.count }} Empresa(s) registradas en total.</p>
     
@@ -72,6 +73,8 @@
             <p class="department">Departamento: {{ company.department}}</p>
             <p class="address">Direccion: {{company.address}}</p>
             <p class="sector">Rubro: {{company.sector}}</p>
+            <p>{{ areas.count }} área(s) registradas en total.</p>
+
             {% if user.is_superuser %} <!--super user-->
         <!-- Botones de eliminación y edición -->
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
@@ -160,7 +163,7 @@
             } else if (address.length < 5 || !isNaN(address)) {
                 alert('La dirección debe tener al menos 5 caracteres y no puede ser solo número');
                 e.preventDefault();
-            } else if (sector.length < 4 ||  /[^a-zA-Z\s]/g.test(sector)){
+            } else if (sector.length < 4 ||  /[^a-zA-Z-Ñ-ñ\s]/g.test(sector)){
                 alert('El sector debe tener al menos 4 caracteres y no puede ser solo número');
                 e.preventDefault();
             }

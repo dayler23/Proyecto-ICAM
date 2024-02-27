@@ -53,7 +53,7 @@ class Area(models.Model):
 
 class Position(models.Model):
     name = models.CharField(max_length=200,verbose_name='Nombre del Puesto')
-    activity_type = RichTextField(max_length=200,verbose_name='Tipo de Actividad')
+    activity_type = models.CharField(max_length=200,verbose_name='Tipo de Actividad')
     image = models.ImageField(default='null',verbose_name="Imagen",upload_to="positions")
     public=models.BooleanField(verbose_name="Publicado")
     created_at = models.DateTimeField(auto_now_add=True,verbose_name='Creado el')

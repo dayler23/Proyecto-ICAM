@@ -44,9 +44,6 @@ def list(request):
     })
 
 
-
-
-
 #metodo para extraer todo el objeto de area y mostrar los 
 #positions de cada area
 
@@ -59,12 +56,18 @@ def area(request,area_id):
     if not request.user.is_superuser and area.company.user != request.user:
         return HttpResponseForbidden("No tienes permiso para ver esta area.")
 
+
+    
     # Obtén el ID de la empresa seleccionada de la sesión
     company_id = request.session.get('selected_company_id')
     company = get_object_or_404(Company, id=company_id)
 
+    if request.user.is_superuser:
     #enlaza los position por area y empresa
-    positions = Position.objects.filter(area=area, area__company=company)
+        positions = Position.objects.filter(area=area, area__company=company)
+    else:
+        positions = Position.objects.filter(area=area, area__company=company,public=True)
+
     return render(request,'areas/area.html',{
         'area':area,
         'positions':positions
@@ -82,6 +85,7 @@ def position(request, position_id):
         return HttpResponseForbidden("No tienes permiso para ver este puesto.")
 
     return render(request, 'positions/detail.html', {
+        
         'position': position
     })
 
@@ -105,6 +109,8 @@ def company_areas(request, company_id):
 def delete_company(request, company_id):
     company = get_object_or_404(Company, id=company_id)
     company.delete()
+    messages.success(request, "Empresa eliminada con éxito")
+
     return redirect(reverse('index'))
 
 
@@ -136,8 +142,6 @@ def search_company(request,user_id):
         companies = Company.objects.filter(user_id=user.id)
     return render(request, 'mainapp/index.html', {'companies': companies,'user':user, 'searched': searched})
     
-
-
 #añadir area
 @login_required(login_url="login")
 def add_area(request):

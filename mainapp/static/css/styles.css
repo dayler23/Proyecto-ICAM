@@ -169,13 +169,19 @@ background: #1c314c;
 .alert-success,
 .alert{
     padding: 20px;
-    background-color: #1c314c;
-    color: white;
+    background-color: #f2911ac7;
+    color: #1c314c;
+    font-size: 30px;
+    border-radius: 20px;
+    
+
     text-align: center;
     margin-bottom: 20px;
 }
 .alert-warning{
-    background: red;
+    color:#f2911a;
+    background-color:#1c314c ;
+    font-size: 20px;
 }
 
 /*estilo del boton crearte article*/
@@ -213,8 +219,8 @@ background: #1c314c;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 300px;
     overflow: hidden;
 }
 
@@ -348,9 +354,11 @@ footer{
     display: flex; /* Habilita Flexbox */
     align-items: center; /* Centra los elementos verticalmente */
     justify-content: center; /* Centra los elementos horizontalmente */
-    height: 200px; /* Ajusta al tamaño que prefieras */
-    width: 200px; /* Ajusta al tamaño que prefieras */
+    height: 300px; /* Ajusta al tamaño que prefieras */
+    width: 300px; /* Ajusta al tamaño que prefieras */
     overflow: hidden; /* Esto asegura que la imagen no se salga de su contenedor */
+   
+
 }
 
 .company-box .company-info {
@@ -454,20 +462,6 @@ footer{
     cursor: pointer;
 }
 
-
-/* Estilo para el botón de cerrar */
-#close {
-    color: white;
-    background-color: rgba(255, 0, 0, 0.65);
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 20%;
-    
-}
 
 
 

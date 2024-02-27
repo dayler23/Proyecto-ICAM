@@ -1,11 +1,17 @@
 {% extends "layouts/layout.html" %}
 
-{% block title %} {{title}} {%endblock%}
+{% block title %} {{title}} DE {{company.name}}  {%endblock%}
 
 {%block content%}
 
 <h1 class="title" style="text-transform: uppercase;"> {{title}} DE: {{company.name}} </h1>
-
+{% if messages %}
+    {%for message in messages%}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {%endfor%}
+{% endif %}
 
 
 <p>{{ areas.count }} área(s) registradas en total.</p>
@@ -56,10 +62,10 @@
 
         <div class="position-item">
             <div class="logo">
-                <i class="fas fa-map" style="font-size: 8em; color: white;padding-left:10px;"></i>
+                <i class="fas fa-map" style="font-size: 15em; color: white;padding-left:10px;"></i>
 
             </div>
-            <div class="data">
+                <div class="data">
                     <h3>{{ area.name }}</h3>
                     <p>{{ area.created_at }}</p>
                     <p>Descripcion: {{ area.description }}</p>

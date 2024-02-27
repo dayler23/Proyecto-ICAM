@@ -1,5 +1,11 @@
 
-
+{% if messages %}
+    {%for message in messages%}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {%endfor%}
+{% endif %}
 
 <p>{{ positions.count }} Puestos(s) registradas en total.</p>
 
@@ -69,7 +75,7 @@
         
     </a>
     {% if user.is_superuser %}
-            <div style="display: block; justify-content: flex-end; flex-direction: column;">
+     <div style="display: flex; justify-content: flex-end; flex-direction: column;">
                 <!-- Botón de edición -->
                 <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editPositionForm{{ position.id }}')">
                     <i class="fas fa-pencil-alt"></i>
