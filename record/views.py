@@ -102,6 +102,26 @@ def company_areas(request, company_id):
         
     })
 
+#añadir empresa
+@login_required(login_url="login")
+def add_company(request):
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_company = form.save(commit=False)
+            user_id = request.POST.get('user')  # Obtiene el ID del usuario seleccionado
+            if user_id is not None:  # Comprueba si se seleccionó un usuario
+                user = User.objects.get(id=user_id)  # Obtiene el objeto User correspondiente
+                new_company.user = user  # Asigna el usuario a la nueva empresa
+                new_company.save()
+                messages.success(request, "Empresa añadida con éxito")
+                return redirect('index')
+            else:
+                messages.error(request, "Debe seleccionar un usuario")
+    else:
+        form = CompanyForm()
+    users = User.objects.all()  # Obtén todos los usuarios
+    return render(request, 'company/add_company.html', {'form': form, 'users': users})  # Pasa los usuarios al contexto
 
 
 #eliminar empresa en index
@@ -118,6 +138,7 @@ def delete_company(request, company_id):
 @login_required
 def edit_company(request, company_id):
     company = get_object_or_404(Company, id=company_id)
+    users = User.objects.all()  # Obtén todos los usuarios
     if request.method == 'POST':
         form = CompanyForm(request.POST, request.FILES, instance=company)
         if form.is_valid():
@@ -126,22 +147,32 @@ def edit_company(request, company_id):
             return redirect('index')
     else:
         form = CompanyForm(instance=company)
-    return render(request, 'mainapp/edit_company.html', {'form': form})
+    return render(request, 'company/edit_company.html', {'form': form, 'users': users})  # Pasa los usuarios al contexto
 
 
 #buscar empresa
-def search_company(request,user_id):
+@login_required(login_url="login")
+def search_company(request, user_id):
     query = request.GET.get('q')
     searched = False
     user = User.objects.get(id=user_id)
+    companies = None
 
-    if query:
-        companies = Company.objects.filter(Q(name__icontains=query),user_id=user.id)
-        searched = True
+    if request.user.is_superuser:
+        if query:
+            companies = Company.objects.filter(name__icontains=query)
+            searched = True
+        else:
+            companies = Company.objects.all()
     else:
-        companies = Company.objects.filter(user_id=user.id)
-    return render(request, 'mainapp/index.html', {'companies': companies,'user':user, 'searched': searched})
-    
+        if query:
+            companies = Company.objects.filter(Q(name__icontains=query), user_id=user.id)
+            searched = True
+        else:
+            companies = Company.objects.filter(user_id=user.id)
+
+    return render(request, 'mainapp/index.html', {'companies': companies, 'user': user, 'searched': searched})
+
 #añadir area
 @login_required(login_url="login")
 def add_area(request):

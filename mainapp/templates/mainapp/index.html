@@ -20,28 +20,10 @@
     <div style="display: flex; align-items: center; justify-content: space-between;">
         {% if user.is_superuser %}
         <!-- Botón de añadir empresa -->
-        <button id="toggleFormButton" class="form-button" style="margin: 0; padding: 10px;">Añadir Empresa</button>       
-         <div id="companyForm" class="modal">
-            <div class="modal-content">
-                <a href="#" id="close">X</a>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    {{ form.hidden_fields }}
-                    {% for field in form.visible_fields %}
-                        <div class="fieldWrapper">
-                            {{ field.errors }}
-                            {{ field.label_tag }} {{ field }}
-                            {% if field.help_text %}
-                            <p class="help">{{ field.help_text }}</p>
-                            {% endif %}
-                            
-                        </div>
-                    {% endfor %}
-                    <button class="form-button" type="submit">Guardar</button>
-                </form>
-            </div>
-        </div>
+        
+        <a href="{% url 'add_company' %}" class="form-button" style="margin: 0; padding: 10px; text-decoration: none; background: white; color: #1c314c;">Añadir Empresa</a>
+                   
+           
         {% endif %}
         <!-- Formulario de búsqueda -->
         <form method="get" action="{% url 'search_company' user.id %}" style="display: flex; align-items: center;">
@@ -73,8 +55,7 @@
             <p class="department">Departamento: {{ company.department}}</p>
             <p class="address">Direccion: {{company.address}}</p>
             <p class="sector">Rubro: {{company.sector}}</p>
-            <p>{{ areas.count }} área(s) registradas en total.</p>
-
+            <p>{{ company.area_count }} área(s) registradas en total.</p>
             {% if user.is_superuser %} <!--super user-->
         <!-- Botones de eliminación y edición -->
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
