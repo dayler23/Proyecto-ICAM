@@ -40,17 +40,17 @@
 {% endif %}
   <!-- Formulario de búsqueda -->
   <form method="get" action="{% url 'search_position' area.id %}" style="display: flex; align-items: center;">
-    <input type="text" name="q" placeholder="Buscar puesto" style="margin: 0; padding: 15px; border-radius: 50px;">
+    <input type="text" name="q" placeholder="Buscar puesto" style="margin: 0; padding: 15px; border-radius: 50px;font-size:22px">
     <button class="form-button" type="submit" style="margin: 5px; padding: 8px;border:0;"><i class="fas fa-search"></i></button>
     </form>
 
+
+</div>
 {% if searched %}
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <button id="viewAllButton" class="form-button" onclick="window.location.replace('{% url 'area' area.id %}');">Ver todos los puestos de esta área</button>
 </div>
     {% endif %}
-</div>
-
 
 {% for position in positions%}
     <article class="position-item">
@@ -70,23 +70,21 @@
             <p><strong>AREA:</strong> {{position.area}} </p>           
             <p> <strong>ACTIVIDAD:</strong> {{position.activity_type|safe}}</p>
             <p> <strong>PUBLICADO:</strong> {{position.public}}</p>
-
-        </div>
-        
-    </a>
-    {% if user.is_superuser %}
-     <div style="display: flex; justify-content: flex-end; flex-direction: column;">
-                <!-- Botón de edición -->
-                <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editPositionForm{{ position.id }}')">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
+            </a>
+            {% if user.is_superuser %}
+             <div style="display: block; justify-content: flex-end; flex-direction: column;">
+                
                 <!-- Formulario de eliminación -->
                 <form action="{% url 'delete_position' position.area.id position.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este puesto?');" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" style="background-color: #fb043b; color: white; border: none; cursor: pointer; width: 80px;">
                         <i class="fas fa-trash"></i>
                     </button>
-                </form>
+                </form><!-- Botón de edición -->
+                <button type="button" style="background-color: #007bff; color: white; border: none; cursor: pointer; width: 80px;height:44px;" onclick="openForm('editPositionForm{{ position.id }}')">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                
                 
                 
             </div>
@@ -109,8 +107,10 @@
             
         {% endif %}
         
+            </div>
+    
         
-        <div class="clearfix"></div>
+        
         
     </article>     
 {% endfor %}

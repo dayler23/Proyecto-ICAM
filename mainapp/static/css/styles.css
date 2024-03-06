@@ -170,7 +170,7 @@ background: #1c314c;
 .alert{
     padding: 20px;
     background-color: #f2911ac7;
-    color: #1c314c;
+    color: white;
     font-size: 30px;
     border-radius: 20px;
     
@@ -411,7 +411,38 @@ footer{
     margin: 4px;
     cursor: pointer;
     border-radius: 12px; /* bordes redondeados */
+}/*añadir empresa*/
+.add-button ,.cancel-button {
+    background-color: orange; /* color de fondo */
+    border: none;
+    color: white; /* color del texto */
+    padding: 15px; /* tamaño del botón */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 12px; /* bordes redondeados */
+    border: 2px solid orange;
+    
+   
+    
 }
+.add-button:hover{
+    background-color: orange; /* color de fondo */
+    color: white;
+   
+    
+}
+.cancel-button:hover{
+    background-color: orange; /* color de fondo */
+    color: white;
+   
+    
+}
+   
+
 /*form añadir empresa*/
 /* Estilo para la ventana de fondo */
 .modal {
@@ -593,14 +624,11 @@ footer{
 /*btn añadir area*/
 .btn-add {
     display: block; /* Hace que el enlace ocupe toda la fila */
-    
     text-align: center; /* Centrado */
     padding: 10px; /* Espaciado */
 }
 
 /*detail.html*/
-
-
 .position-container {
     display: flex;
     justify-content: space-between;
@@ -639,3 +667,23 @@ footer{
 .sector:first-letter {
     text-transform: uppercase;
   }
+
+.btn-eva{
+    background-color: #ff8000e2; /* Naranja */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 130px;
+  }
+
+  .btn-eva:hover{
+   background-color: orange;
+  }
+  

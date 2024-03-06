@@ -2,9 +2,9 @@
 {% block content %}
 <div style="display: flex;">
     <!-- Columna izquierda: Formulario de la empresa -->
-    <div style="flex: 50%; padding: 5px;">
+    <div style="flex: 50%; padding: 5px;"></hr>
         <h1>Añadir Empresa</h1>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" style="color:white;">
             {% csrf_token %}
             {{ form.name.label_tag }} {{ form.name }}
             {{ form.address.label_tag }} {{ form.address }}
@@ -17,22 +17,25 @@
     <!-- Columna derecha: Tabla de usuarios -->
     <div style="flex: 50%; padding: 5px;">
         <h2>Usuarios</h2>
-        <table>
-            <tr>
+        <table style="background:#1c314c;color:white;">
+            <tr style=" border:1px solid white;text-aling:center;">
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Seleccionar</th>
+                
+
             </tr>
             {% for user in users %}
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td><input type="radio" name="userRadio" value="{{ user.id }}"></td>
+                
+                <td><input style="height:20px ;"type="radio" name="userRadio" value="{{ user.id }}"></td>
             </tr>
             {% endfor %}
         </table>
-        <button type="submit">Guardar</button>
-        <a href="{% url 'index' %}" class="btn btn-default">Cancelar</a>
+            <button class="add-button" type="submit">Guardar</button>
+            <a href="{% url 'index' %}" class="cancel-button" >Cancelar</a>
         </form>
     </div>
 </div>

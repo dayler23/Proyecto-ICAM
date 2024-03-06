@@ -41,18 +41,18 @@
 {% endif %}
   <!-- Formulario de búsqueda -->
   <form method="get" action="{% url 'search_area' company.id %}" style="display: flex; align-items: center;">
-    <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 15px; border-radius: 50px;">
+    <input type="text" name="q" placeholder="Buscar área" style="margin: 0; padding: 15px; border-radius: 50px;font-size:22px">
     <button class="form-button" type="submit" style="margin: 5px; padding: 8px;border:0;"><i class="fas fa-search"></i></button>
 </form>
 
+
+
+</div>
 {% if searched %}
 <div style="display: flex; justify-content: center; margin-top: 20px;">
     <button id="viewAllButton" class="form-button" onclick="window.location.replace('{% url 'company_areas' company.id %}');">Ver todas las áreas</button>
 </div>
 {% endif %}
-
-</div>
-
 
 
 {% for area in areas %}
@@ -70,7 +70,8 @@
                     <p>{{ area.created_at }}</p>
                     <p>Descripcion: {{ area.description }}</p>
                     <p class="companyName" style="text-transform: capitalize;">Empresa: {{ area.company }}</p>
-                    
+                    <p>{{ area.position_count }} puesto(s) registradas en total.</p>
+
                 </a>
                 {% if user.is_superuser %}
                 <!-- Botones de eliminar y editar -->
