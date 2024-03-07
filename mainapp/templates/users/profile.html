@@ -12,13 +12,27 @@
                     <p class="card-text text-dark">Nombre: {{ user.first_name }}</p>
                     <p class="card-text text-dark">Apellido: {{ user.last_name }}</p>
                     {% if request.user.is_authenticated and request.user.is_superuser %}
-                    <form method="post" action="{% url 'delete_user' user.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">
-                          <i class="fas fa-trash-alt"></i> 
+                    <div class="btn-group" role="group" aria-label="User Actions">
+                        <form method="post" action="{% url 'toggle_superuser' user.id %}" style="display: inline;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary btn-space">
+                            {% if user.is_superuser %}
+                              <i class="fas fa-arrow-down"></i>
+                            {% else %}
+                              <i class="fas fa-arrow-up"></i>
+                            {% endif %}
+                          </button>
+                        </form>
+                        <form method="post" action="{% url 'delete_user' user.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-space">
+                              <i class="fas fa-trash-alt"></i> 
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-secondary btn-space" disabled>
+                          <i class="fas fa-pencil-alt"></i>
                         </button>
-                      </form>
-                      
+                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -27,3 +41,5 @@
     {% endfor %}
 </div>
 {% endblock %}
+
+

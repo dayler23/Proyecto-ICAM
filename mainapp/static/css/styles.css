@@ -686,4 +686,6 @@ footer{
   .btn-eva:hover{
    background-color: orange;
   }
-  
+  .btn-space {
+    margin-right: 8px;  /* Ajusta este valor según tus necesidades */
+  }

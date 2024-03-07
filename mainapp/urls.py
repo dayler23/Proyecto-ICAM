@@ -13,6 +13,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     
     path('delete_user/<int:user_id>/', views.delete_user, name='delete_user'),
+path('toggle_superuser/<int:user_id>/', views.toggle_superuser, name='toggle_superuser'),
+
 ]
 
 

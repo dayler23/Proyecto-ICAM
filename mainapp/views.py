@@ -76,11 +76,15 @@ def logout_user(request):
 
 @login_required
 def profile(request):
-     if not request.user.is_superuser:
-        return redirect('inicio')  # Redirige a los usuarios no superusuarios a la página de inicio
+    users = User.objects.none()  # Inicializa la variable users
 
-     users = User.objects.all()  # Recupera todos los usuarios
-     return render(request, 'users/profile.html', {'users': users})
+    if request.user.is_superuser:
+        users = User.objects.all()  # Recupera todos los usuarios si es superusuario
+    else:
+        users = User.objects.filter(id=request.user.id)  # Recupera solo el usuario actual si no es superusuario
+
+    return render(request, 'users/profile.html', {'users': users})
+
 
 #delete user
 @login_required
@@ -92,6 +96,23 @@ def delete_user(request, user_id):
     user_to_delete.delete()
     messages.success(request, "Usuario eliminado con éxito")
     return redirect('profile')
+
+@login_required
+def toggle_superuser(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('inicio')  # Solo permite que el superusuario cambie el estado de superusuario de otros usuarios
+
+    user = User.objects.get(id=user_id)
+    user.is_superuser = not user.is_superuser  # Cambia el estado de superusuario
+    user.save()
+
+    if user.is_superuser:
+        messages.success(request, f"{user.username} ahora es superusuario.")
+    else:
+        messages.success(request, f"{user.username} ya no es superusuario.")
+
+    return redirect('profile')
+
 
 
 
