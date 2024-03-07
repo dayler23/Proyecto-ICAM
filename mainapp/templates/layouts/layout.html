@@ -48,6 +48,12 @@
                 </li>
             {% endfor %}
             {% endif %}
+            {% if user.is_authenticated %}
+    <li>
+        <a href="{% url 'profile' %}"><i class="fas fa-user"></i>Usuario</a>
+    </li>
+{% endif %}
+
             {% if user.email %}
                 <li>
                     <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>

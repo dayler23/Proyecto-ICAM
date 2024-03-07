@@ -1,0 +1,29 @@
+{% extends "layouts/layout.html" %}
+
+{% block content %}
+<div class="container">
+    {% for user in users %}
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <h2 class="card-title text-primary">{{ user.username }}</h2>
+                    <p class="card-text text-dark">Email: {{ user.email }}</p>
+                    <p class="card-text text-dark">Nombre: {{ user.first_name }}</p>
+                    <p class="card-text text-dark">Apellido: {{ user.last_name }}</p>
+                    {% if request.user.is_authenticated and request.user.is_superuser %}
+                    <form method="post" action="{% url 'delete_user' user.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                          <i class="fas fa-trash-alt"></i> 
+                        </button>
+                      </form>
+                      
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

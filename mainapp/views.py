@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from mainapp.forms import RegisterForm
 from django.contrib.auth import authenticate,login,logout
-from record.models import Company, Area  # Importa los modelos de la empresa y el área
+from record.models import User,Company, Area  # Importa los modelos de la empresa y el área
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 
@@ -71,4 +71,28 @@ def login_page(request):
 def logout_user(request):
      logout(request)
      return redirect('login')
+
+
+
+@login_required
+def profile(request):
+     if not request.user.is_superuser:
+        return redirect('inicio')  # Redirige a los usuarios no superusuarios a la página de inicio
+
+     users = User.objects.all()  # Recupera todos los usuarios
+     return render(request, 'users/profile.html', {'users': users})
+
+#delete user
+@login_required
+def delete_user(request, user_id):
+    if not request.user.is_superuser:
+        return redirect('inicio')  # Redirige a los usuarios no superusuarios a la página de inicio
+
+    user_to_delete = User.objects.get(id=user_id)
+    user_to_delete.delete()
+    messages.success(request, "Usuario eliminado con éxito")
+    return redirect('profile')
+
+
+
 
