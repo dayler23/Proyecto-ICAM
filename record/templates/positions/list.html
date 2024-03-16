@@ -1,5 +1,5 @@
 {% extends "layouts/layout.html" %}
-
+<!--HTML DE AREAS-->
 {% block title %} {{title}} DE {{company.name}}  {%endblock%}
 
 {%block content%}
@@ -62,15 +62,13 @@
 
         <div class="position-item">
             <div class="logo">
-                <i class="fas fa-map" style="font-size: 15em; color: white;padding-left:10px;"></i>
+                <i class="fa fa-object-ungroup" style="font-size: 15em; color: #1c314c;padding-left:10px;"></i>
 
             </div>
                 <div class="data">
                     <h3>{{ area.name }}</h3>
                     <p>{{ area.created_at }}</p>
                     <p>Descripcion: {{ area.description }}</p>
-                    <p class="companyName" style="text-transform: capitalize;">Empresa: {{ area.company }}</p>
-                    <p>{{ area.position_count }} puesto(s) registradas en total.</p>
 
                 </a>
                 {% if user.is_superuser %}

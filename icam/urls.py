@@ -28,6 +28,8 @@ urlpatterns = [
 
     path('', include('record.urls')),
 
+    path('', include('ilupt.urls')),
+
 
 ]
 

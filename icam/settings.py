@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mainapp',
     'pages.apps.PagesConfig',
     'record.apps.RecordConfig',
+    'ilupt',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/La_Paz'
 
 USE_I18N = True
 

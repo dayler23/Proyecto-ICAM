@@ -1,0 +1,132 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %} Evaluación de Iluminación para {{position.name}} {% endblock %}
+
+{% block content %}
+    <h1>Evaluación de Iluminación para {{position.name}}</h1>
+
+<form method="post"style="color:white;">
+    {% csrf_token %}
+
+    <label for="period">Periodo:</label>
+    <select id="period" name="period">
+        {% for choice in form.fields.period.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="type">Tipo de Iluminación:</label>
+    <select id="type" name="type">
+        {% for choice in form.fields.type.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="time">Hora:</label>
+    <input type="time" id="time" name="time" value="{{ form.time.value|date:'H:i' }}" required>
+
+    <div class="row">
+        <div class="col">
+            <h2>Izquierda</h2>
+            {{ form.left_1 }}
+            {{ form.left_2 }}
+            {{ form.left_3 }}
+            {{ form.left_4 }}
+            {{ form.left_5 }}
+        </div>
+
+        <div class="col">
+            <h2>Centro</h2>
+            {{ form.center_1 }}
+            {{ form.center_2 }}
+            {{ form.center_3 }}
+            {{ form.center_4 }}
+            {{ form.center_5 }}
+        </div>
+
+        <div class="col">
+            <h2>Derecha</h2>
+            {{ form.right_1 }}
+            {{ form.right_2 }}
+            {{ form.right_3 }}
+            {{ form.right_4 }}
+            {{ form.right_5 }}
+        </div>
+        
+
+    </div>
+    <input type="button" value="Calcular" onclick="calculate()">
+
+    <label for="average">Promedio:</label>
+    {{ form.average }}
+
+    <label for="maximum">Máximo:</label>
+    {{ form.maximum }}
+
+    <label for="minimum">Mínimo:</label>
+    {{ form.minimum }}
+    
+
+    <label for="parameter">Parámetro:</label>
+    <select id="parameter" name="parameter">
+        {% for choice in form.fields.parameter.choices %}
+            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="date">Fecha:</label>
+    <input type="date" id="date" name="date" value="{{ form.date.value|date:'Y-m-d' }}" required>
+
+    <label for="observations">Observaciones:</label>
+    {{ form.observations }}
+
+    <label for="suggestions">Sugerencias:</label>
+    {{ form.suggestions }}
+
+    <input type="submit" value="Guardar">
+</form>
+
+<script>
+    function calculate() {
+        // Obtén los valores de las mediciones
+        var measurements = [
+            parseFloat(document.getElementById('left_1').value),
+            parseFloat(document.getElementById('left_2').value),
+            parseFloat(document.getElementById('left_3').value),
+            parseFloat(document.getElementById('left_4').value),
+            parseFloat(document.getElementById('left_5').value),
+            parseFloat(document.getElementById('center_1').value),
+            parseFloat(document.getElementById('center_2').value),
+            parseFloat(document.getElementById('center_3').value),
+            parseFloat(document.getElementById('center_4').value),
+            parseFloat(document.getElementById('center_5').value),
+            parseFloat(document.getElementById('right_1').value),
+            parseFloat(document.getElementById('right_2').value),
+            parseFloat(document.getElementById('right_3').value),
+            parseFloat(document.getElementById('right_4').value),
+            parseFloat(document.getElementById('right_5').value)
+        ];
+    
+        // Filtra los valores no numéricos
+        measurements = measurements.filter(value => !isNaN(value));
+    
+        // Verifica si hay mediciones antes de calcular
+        if (measurements.length > 0) {
+            // Calcula el mínimo, máximo y promedio
+            var min = Math.min(...measurements);
+            var max = Math.max(...measurements);
+            var sum = measurements.reduce((a, b) => a + b, 0);
+            var avg = sum / measurements.length;
+        
+            // Asigna los resultados a los campos correspondientes
+            document.getElementById('minimum').value = min;
+            document.getElementById('maximum').value = max;
+            document.getElementById('average').value = avg.toFixed(2);
+        } else {
+            alert('Por favor, ingresa al menos una medición.');
+        }
+    }
+    
+</script>
+    
+{% endblock %}

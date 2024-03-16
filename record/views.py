@@ -4,6 +4,8 @@ from django.shortcuts import render,get_object_or_404,redirect
 from record.models import Company,Area,Position
 from django.contrib.auth.models import User
 
+from django.db.models import Count
+
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
@@ -16,7 +18,7 @@ from django.db.models import Q
 
 
 # Create your views here.
-
+#muestra las areas
 #metodo para extraer todo el objeto de Position y mostrar en list.html
 @login_required(login_url="login")
 def list(request):
@@ -31,21 +33,14 @@ def list(request):
     # Obtén la empresa seleccionada
     selected_company = get_object_or_404(Company, id=selected_company_id)
 
-    # Obtén solo las áreas de la empresa seleccionada
-    areas = Area.objects.filter(company=selected_company)
-
-    # Obtén solo los puestos de trabajo de esas áreas
-    
+    # Obtén solo las áreas de la empresa seleccionada y cuenta los puestos de trabajo para cada una
+    areas = Area.objects.filter(company=selected_company).annotate(position_count=Count('position'))
 
     return render(request, 'positions/list.html', {
         'title': 'Areas',
         'areas':areas
-        
     })
 
-
-#metodo para extraer todo el objeto de area y mostrar los 
-#positions de cada area
 
 #muestra los puestos por area al seleccionar el area 
 @login_required(login_url="login")
@@ -74,7 +69,7 @@ def area(request,area_id):
     })
 
 
-
+#detai.html
 @login_required(login_url="login")
 def position(request, position_id):
     # Crea la página de cada puesto

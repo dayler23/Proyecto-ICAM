@@ -634,6 +634,7 @@ footer{
     justify-content: space-between;
     align-items: center; /* Centra el contenido verticalmente */
     padding: 20px;
+    
 }
 
 .position-image {
@@ -689,3 +690,32 @@ footer{
   .btn-space {
     margin-right: 8px;  /* Ajusta este valor según tus necesidades */
   }
+  /*eva uli*/
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #dddddd;
+}
+.styled-table th {
+        color: white;
+    background-color: #ff8000e2;
+}
+.styled-table tr {
+    border-bottom: 1px solid #dddddd;
+    background-color: #1c314c;
+    color: white;
+}
+.evaluation-box {
+    
+    padding: 15px;
+    margin-bottom: 20px;
+   
+}
