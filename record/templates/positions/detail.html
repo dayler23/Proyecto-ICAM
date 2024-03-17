@@ -36,11 +36,104 @@
 <hr>
 
 {% if position.lightingevaluation_set.count > 0 %}
+
+
 <p>Evaluaciones de Iluminacion</p>
+
 <button id="toggleEvaluationsButton" style="background-color: orange; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
-    <i class="fas fa-angle-down"></i> Mostrar/Ocultar Evaluaciones
+    <i class="fas fa-angle-down"></i> Mostrar/Ocultar Evaluaciones ILUMINACION
 </button><div id="evaluations">
+<!--<img src="{% url 'graph_day' position.id %}" alt="Gráfico de día">
+<img src="{% url 'graph_night' position.id %}" alt="Gráfico de noche">-->
+
+    
+<div id="dayEvaluations">
+    <p>Evaluaciones de Día:</p>
 {% for evaluation in position.lightingevaluation_set.all %}
+
+{% if evaluation.period == "Dia" %}
+    
+    <div class="evaluation-box">
+              
+        <table class="styled-table">
+            <tr>
+                <th rowspan="2">Fecha</th>
+                <th rowspan="2">Tipo de Iluminacion</th>
+                <th rowspan="2">Hora</th>
+                <th colspan="3">Mediciones</th>
+                <th rowspan="2">Max</th>
+                <th rowspan="2">Min</th>
+                <th rowspan="2">Promedio</th>
+                <th rowspan="2">Parámetro</th>
+                <th rowspan="2">Cumplimiento</th>
+
+                {% if evaluation.observations %}
+                <th rowspan="2">Observación</th>
+                {% endif %}
+                
+                {% if evaluation.suggestions %}
+                <th rowspan="2">Sugerencias</th>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Izq.</th>
+                <th>Cen.</th>
+                <th>Der.</th>
+            </tr>
+            <tr>
+                <td rowspan="5">{{ evaluation.date |date:"d/m/Y"}}</td>
+                <td rowspan="5">{{ evaluation.type }}</td>
+                <td rowspan="5">{{ evaluation.time }}</td>
+                <td>{{ evaluation.left_1 }}</td>
+                <td>{{ evaluation.center_1 }}</td>
+                <td>{{ evaluation.right_1 }}</td>
+                <td rowspan="5">{{ evaluation.maximum }}</td>
+                <td rowspan="5">{{ evaluation.minimum }}</td>
+                <td rowspan="5">{{ evaluation.average }}</td>
+                <td rowspan="5">{{ evaluation.parameter }}</td>
+                <td rowspan="5">{% if evaluation.average > evaluation.parameter %}Cumple{% else %}No cumple{% endif %}</td>
+                
+                {% if evaluation.observations %}
+                <td rowspan="5">{{ evaluation.observations }}</td>
+                {% endif %}
+
+                {% if evaluation.suggestions %}
+                <td rowspan="5">{{ evaluation.suggestions }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>{{ evaluation.left_2 }}</td>
+                <td>{{ evaluation.center_2 }}</td>
+                <td>{{ evaluation.right_2 }}</td>
+            </tr>
+            <tr>
+                <td>{{ evaluation.left_3 }}</td>
+                <td>{{ evaluation.center_3 }}</td>
+                <td>{{ evaluation.right_3 }}</td>
+            </tr>
+            <tr>
+                <td>{{ evaluation.left_4 }}</td>
+                <td>{{ evaluation.center_4 }}</td>
+                <td>{{ evaluation.right_4 }}</td>
+            </tr>
+            <tr>
+                <td>{{ evaluation.left_5 }}</td>
+                <td>{{ evaluation.center_5 }}</td>
+                <td>{{ evaluation.right_5 }}</td>
+            </tr>
+        </table>
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+
+<div id="nightEvaluations">
+    <p>Evaluaciones de Noche:</p>
+{% for evaluation in position.lightingevaluation_set.all %}
+    {% if evaluation.period == "Noche" %}
+    
+       
     <div class="evaluation-box">
         <p>Fecha: {{ evaluation.date }} - {{ evaluation.period }}</p>
 
@@ -111,15 +204,18 @@
             </tr>
         </table>
     </div>
-
-
+    <!-- Aquí va el código HTML para mostrar la evaluación -->
+    {% endif %}
 {% endfor %}
-<img src="{% url 'graph' position.id %}" alt="Gráfico de evaluaciones">
+</div>
+{% endif %}
+
+
+
 
 </div >
-<!-- En tu archivo HTML -->
 
-{% endif %}
+
 <script>
     document.getElementById('toggleEvaluationsButton').addEventListener('click', function() {
         var evaluations = document.getElementById('evaluations');

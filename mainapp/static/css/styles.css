@@ -694,22 +694,23 @@ footer{
   .btn-space {
     margin-right: 8px;  /* Ajusta este valor según tus necesidades */
   }
+
   /*eva uli detail*/
 .styled-table {
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 10px;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
 }
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px;
+    padding: 4px;
     text-align: center;
     border: 1px solid #dddddd;
 }
 .styled-table th {
-        color: white;
+    color: white;
     background-color: #ff8000e2;
 }
 .styled-table tr {
@@ -719,11 +720,11 @@ footer{
 }
 .evaluation-box {
     
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 5px;
+   
    
 }
-
+/*form ilupt */
 .myForm > .column {
     width: 70%; /* Ajusta este valor según tus necesidades */
     margin-right: 100px;

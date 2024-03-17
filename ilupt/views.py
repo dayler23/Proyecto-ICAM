@@ -19,18 +19,19 @@ def evaluacion_iluminacion(request, position_id):
     context = {'position': position, 'form': form}
     return render(request, 'evaluacion_iluminacion.html', context)
 
+
 #grafico
-# En views.py de la aplicación iluPT
 from django.http import HttpResponse
 import matplotlib.pyplot as plt
-from record.models import Position  # Importa el modelo Position desde la otra aplicación
+import matplotlib.dates as mdates
+from record.models import Position
 
-def graph(request, position_id):
+def graph_day(request, position_id):
+    # Obtén las evaluaciones para el puesto de trabajo
+    evaluations = Position.objects.get(id=position_id).lightingevaluation_set.filter(period="Dia").order_by('date')
+
     # Crea una figura y un eje
     fig, ax = plt.subplots()
-
-    # Obtén las evaluaciones para el puesto de trabajo
-    evaluations = Position.objects.get(id=position_id).lightingevaluation_set.all()
 
     # Extrae las fechas y los promedios de las evaluaciones
     dates = [evaluation.date for evaluation in evaluations]
@@ -39,12 +40,42 @@ def graph(request, position_id):
 
     # Crea el gráfico
     ax.plot(dates, averages, label='Promedio')
-    ax.plot(dates, parameters, label='Parámetro', linestyle='--*')
+    ax.plot(dates, parameters, label='Parámetro', linestyle='--')
     ax.legend()
 
     # Añade títulos y etiquetas
-    ax.set_title('Fluctuación del promedio de las evaluaciones')
-    ax.set_xlabel('Fecha')
+    ax.set_title('Fluctuación del promedio de las evaluaciones de día')
+    ax.set_xlabel('Año')
+    ax.set_ylabel('Valor')
+
+    # Crea un objeto HttpResponse con el tipo de contenido correcto
+    response = HttpResponse(content_type='image/png')
+
+    # Guarda la figura en el objeto HttpResponse
+    fig.savefig(response, format='png')
+
+    return response
+
+def graph_night(request, position_id):
+    # Obtén las evaluaciones para el puesto de trabajo
+    evaluations = Position.objects.get(id=position_id).lightingevaluation_set.filter(period="Noche").order_by('date')
+
+    # Crea una figura y un eje
+    fig, ax = plt.subplots()
+
+    # Extrae las fechas y los promedios de las evaluaciones
+    dates = [evaluation.date for evaluation in evaluations]
+    averages = [evaluation.average for evaluation in evaluations]
+    parameters = [evaluation.parameter for evaluation in evaluations]
+
+    # Crea el gráfico
+    ax.plot(dates, averages, label='Promedio')
+    ax.plot(dates, parameters, label='Parámetro', linestyle='--')
+    ax.legend()
+
+    # Añade títulos y etiquetas
+    ax.set_title('Fluctuación del promedio de las evaluaciones de noche')
+    ax.set_xlabel('Año')
     ax.set_ylabel('Valor')
 
     # Crea un objeto HttpResponse con el tipo de contenido correcto

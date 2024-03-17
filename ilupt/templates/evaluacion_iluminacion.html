@@ -10,7 +10,6 @@
         <div class="column">
             <label for="period">Periodo:</label>
 <select id="period" name="period" class="wideSelect">
-    <option value="" selected>---</option>
     {% for choice in form.fields.period.choices %}
         <option value="{{ choice.0 }}">{{ choice.1 }}</option>
     {% endfor %}
