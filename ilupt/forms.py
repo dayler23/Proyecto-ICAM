@@ -24,5 +24,7 @@ class LightingEvaluationForm(forms.ModelForm):
             'right_3': forms.NumberInput(attrs={'id': 'right_3'}),
             'right_4': forms.NumberInput(attrs={'id': 'right_4'}),
             'right_5': forms.NumberInput(attrs={'id': 'right_5'}),
+            'observations': forms.Textarea(attrs={'style': 'width:300px;height:150px;resize:none;'}),
+            'suggestions': forms.Textarea(attrs={'style': 'width:300px;height:150px;resize:none;'}),
             # define los widgets para los demás campos si es necesario
         }

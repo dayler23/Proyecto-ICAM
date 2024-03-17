@@ -48,7 +48,7 @@
         <table class="styled-table">
             <tr>
                 <th rowspan="2">Nombre</th>
-                <th rowspan="2">Hora de Medición</th>
+                <th rowspan="2">Hora</th>
                 <th colspan="3">Mediciones</th>
                 <th rowspan="2">Max</th>
                 <th rowspan="2">Min</th>
@@ -111,8 +111,13 @@
             </tr>
         </table>
     </div>
+
+
 {% endfor %}
+<img src="{% url 'graph' position.id %}" alt="Gráfico de evaluaciones">
+
 </div >
+<!-- En tu archivo HTML -->
 
 {% endif %}
 <script>

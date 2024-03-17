@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta charset="UTF-8">
 
     <title> 
         {% block title %}
@@ -42,11 +43,11 @@
                     <a href="{% url 'company_areas' request.session.selected_company_id %}"><i class="fas fa-map-marker-alt"></i>Áreas</a>
                 </li>
             {% endif %}
-            {% for page in pages %}
+            <!--{% for page in pages %}
                 <li>
                     <a href="{% url 'page' page.2 %}">{{page.1}}</a>
                 </li>
-            {% endfor %}
+            {% endfor %}-->
             {% endif %}
             {% if user.is_authenticated %}
     <li>

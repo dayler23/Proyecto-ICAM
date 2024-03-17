@@ -147,9 +147,13 @@ background: #1c314c;
 .box form select{
     width: 100%;
     margin-bottom: 10px;
+    border: 2px solid #FFA500; /* Borde naranja */
+        
+    
 }
 .box form select{
-    width: 100px;
+    width: 230px;
+    height: 45px;
     padding: 5px;
 }
 .box form input[type="submit"],
@@ -157,7 +161,7 @@ background: #1c314c;
 .box form button{
     padding: 10px;
     margin-top: 10px;
-    background: #1c314c;
+    background: orange;
     border: 1px solid #444;
     color: white;
     transition: 300ms all;
@@ -690,7 +694,7 @@ footer{
   .btn-space {
     margin-right: 8px;  /* Ajusta este valor según tus necesidades */
   }
-  /*eva uli*/
+  /*eva uli detail*/
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
@@ -715,7 +719,29 @@ footer{
 }
 .evaluation-box {
     
-    padding: 15px;
+    padding: 10px;
     margin-bottom: 20px;
    
+}
+
+.myForm > .column {
+    width: 70%; /* Ajusta este valor según tus necesidades */
+    margin-right: 100px;
+}
+.measurement input {
+    width: 100px; /* Ajusta este valor según tus necesidades */
+   
+}
+.wideSelect {
+    width: 500px; /* Ajusta este valor según tus necesidades */
+}
+
+select {
+    border: 2px solid #FFA500; /* Borde naranja */
+    width: 10px;
+}
+
+.styled-table th, .styled-table td {
+    word-wrap: break-word;
+    max-width: 150px;
 }

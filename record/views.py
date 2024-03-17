@@ -314,4 +314,3 @@ def search_position(request, area_id):
 
     return render(request, 'areas/area.html', {'positions': positions, 'area': area, 'searched': searched})
 
-
