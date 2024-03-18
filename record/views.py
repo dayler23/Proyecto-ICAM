@@ -5,6 +5,7 @@ from record.models import Company,Area,Position
 from django.contrib.auth.models import User
 
 from django.db.models import Count
+from ilupt.models import LightingEvaluation
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -69,20 +70,6 @@ def area(request,area_id):
     })
 
 
-#detai.html
-@login_required(login_url="login")
-def position(request, position_id):
-    # Crea la página de cada puesto
-    position = get_object_or_404(Position, id=position_id)
-
-    # Si el usuario no es superusuario, asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
-    if not request.user.is_superuser and position.area.company.user != request.user:
-        return HttpResponseForbidden("No tienes permiso para ver este puesto.")
-
-    return render(request, 'positions/detail.html', {
-        
-        'position': position
-    })
 
 
 @login_required(login_url="login")
@@ -314,3 +301,30 @@ def search_position(request, area_id):
 
     return render(request, 'areas/area.html', {'positions': positions, 'area': area, 'searched': searched})
 
+#evaluaciones------------
+
+#detai.html
+@login_required(login_url="login")
+def position(request, position_id):
+    # Crea la página de cada puesto
+    position = get_object_or_404(Position, id=position_id)
+
+    # Si el usuario no es superusuario, asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
+    if not request.user.is_superuser and position.area.company.user != request.user:
+        return HttpResponseForbidden("No tienes permiso para ver este puesto.")
+
+    # Obtiene las evaluaciones asociadas a la posición
+    evaluations = LightingEvaluation.objects.filter(position=position)
+
+    # Filtra las evaluaciones por periodo
+    period = request.GET.get('period')
+    if period in ['Dia', 'Noche']:
+        evaluations = evaluations.filter(period=period)
+
+    # Ordena las evaluaciones por fecha de más reciente a más antigua
+    evaluations = evaluations.order_by('-date')
+
+    return render(request, 'positions/detail.html', {
+        'position': position,
+        'evaluations': evaluations
+    })
