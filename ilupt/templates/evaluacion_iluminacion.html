@@ -8,6 +8,7 @@
         {% csrf_token %}
         <!-- Primera columna -->
         <div class="column">
+             {{form.method}}
             <label for="period">Periodo:</label>
 <select id="period" name="period" class="wideSelect">
     {% for choice in form.fields.period.choices %}

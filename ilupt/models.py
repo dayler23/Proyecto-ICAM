@@ -49,7 +49,9 @@ class LightingEvaluation(models.Model):
     parameter = models.IntegerField(choices=PARAMETER_CHOICES, verbose_name='Parámetro')
     date = models.DateField(verbose_name='Fecha')
 
+
     observations = models.TextField(null=True, blank=True, verbose_name='Observaciones')
     suggestions = models.TextField(null=True, blank=True, verbose_name='Sugerencias')
+
     # Here is the relationship with the Position model
     position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Posición')

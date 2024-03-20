@@ -56,7 +56,13 @@
             <p class="address">Direccion: {{company.address}}</p>
             <p class="sector">Rubro: {{company.sector}}</p>
             <p>{{ company.area_count }} área(s) registradas en total.</p>
-            {% if user.is_superuser %} <!--super user-->
+            {% if company.latest_evaluation %}
+            <p>Última evaluación de iluminación: {{ company.latest_evaluation.date }}</p>
+            
+        {% endif %}
+
+            
+               {% if user.is_superuser %} <!--super user-->
         <!-- Botones de eliminación y edición -->
         <div style="display: block; justify-content: flex-end; flex-direction: column;">
             <form action="{% url 'delete_company' company.id %}" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta empresa?');" style="display: inline;">

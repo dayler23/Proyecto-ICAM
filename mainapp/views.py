@@ -3,27 +3,40 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from mainapp.forms import RegisterForm
 from django.contrib.auth import authenticate,login,logout
-from record.models import User,Company, Area  # Importa los modelos de la empresa y el área
+from record.models import User,Company, Position  # Importa los modelos de la empresa y el área
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-
+from ilupt.models import LightingEvaluation
 
 # Create your views here.
-from django.db.models import Count
 from django.db.models.functions import Lower
+from django.db.models import Max
+
 
 @login_required
 def index(request):
-    companies = None  # Inicializa la variable companies
+    companies = None
 
     if request.user.is_superuser:
-        companies = Company.objects.annotate(area_count=Count('area')).order_by(Lower('name')) # Si es superusuario, obtiene todas las empresas y las ordena por nombre
+        companies = Company.objects.annotate(area_count=Count('area')).order_by(Lower('name'))
     else:
         companies = Company.objects.filter(user=request.user).annotate(area_count=Count('area')).order_by(Lower('name'))
 
-    if not companies.exists():  # Verifica si la consulta devolvió algún resultado
+    # Obtén la última evaluación de iluminación para cada empresa
+    for company in companies:
+        latest_evaluation = None
+        for area in company.area_set.all():
+            for position in area.position_set.all():
+                evaluation = LightingEvaluation.objects.filter(position=position).order_by('-date').first()
+                if evaluation and (latest_evaluation is None or evaluation.date > latest_evaluation.date):
+                    latest_evaluation = evaluation
+        company.latest_evaluation = latest_evaluation
+
+    if not companies.exists():
         messages.warning(request, "No hay empresas disponibles")
     return render(request, 'mainapp/index.html', {'companies': companies})
+
+
 
 #registro
 def register_page(request):
