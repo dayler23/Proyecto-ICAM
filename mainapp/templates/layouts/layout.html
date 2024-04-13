@@ -38,12 +38,18 @@
                 <a href="{% url 'index' %}"><i class="fas fa-building"></i>Empresas</a>
             </li>
             {% if user.is_authenticated %}
-            {% if user.email and 'selected_company_id' in request.session %}
+                {% if user.email and 'selected_company_id' in request.session %}
                 <li>
                     <a href="{% url 'company_areas' request.session.selected_company_id %}"><i class="fas fa-map-marker-alt"></i>Áreas</a>
                 </li>
-            {% endif %}
-            <!--{% for page in pages %}
+                {% endif %}
+
+               <!-- {% if selected_area_id %}
+                <li>
+                    <a href="{% url 'puestos' selected_area_id %}"><i class="fas fa-map-marker-alt"></i>Puestos</a>
+                </li>
+                {% endif %}
+            {% for page in pages %}
                 <li>
                     <a href="{% url 'page' page.2 %}">{{page.1}}</a>
                 </li>

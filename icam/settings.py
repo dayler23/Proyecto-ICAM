@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'pages.apps.PagesConfig',
     'record.apps.RecordConfig',
     'ilupt',
+    'ruido',
 ]
 
 MIDDLEWARE = [

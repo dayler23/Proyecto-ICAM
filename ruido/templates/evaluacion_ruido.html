@@ -1,0 +1,112 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %} Evaluación de Ruido para {{ position.name }} {% endblock %}
+
+{% block content %}
+<h1>Evaluación de Ruido para {{ position.name }} {{method}}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div style="display: flex;">
+        <!-- Primera columna -->
+        
+        <div style="flex: 1;">
+            <label for="type" style="color: white;">Tipo de Ruido:</label>
+            <select id="type" name="type">
+                {% for choice in form.fields.type.choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="source_type" style="color: white;">Tipo de Fuente:</label>
+            <select id="source_type" name="source_type">
+                {% for choice in form.fields.source_type.choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="date" style="color: white;">Fecha:</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <!-- Segunda columna (Tabla 5x5 para mediciones) -->
+        <div style="flex: 2;">
+            <table style="border-collapse: collapse;">
+                {% for row in "12345" %}
+                    <tr>
+                        {% for col in "12345" %}
+                            <td style="padding: 5px;">
+                                <input type="number" name="m_{{ row }}{{ col }}" id="m_{{ row }}{{ col }}" >
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Tercera columna -->
+        <div style="flex: 1;">
+            <label for="min" style="color: white;">Mínimo:</label>
+            <input type="number" id="min" name="min">
+            <label for="max" style="color: white;">Máximo:</label>
+            <input type="number" id="max" name="max">
+
+
+            <label for="average" style="color: white;">LAeqT:</label>
+            <input type="number" id="average" name="average">
+            <label for="parameter" style="color: white;">LEP(*):</label>
+            <input type="number" id="parameter" name="parameter" value="85" readonly>
+                        
+            <label for="exposure_time" style="color: white;">TMPE:</label>
+            <input type="number" id="exposure_time" name="exposure_time">
+            <label for="dose" style="color: white;">Dosis:</label>
+            <input type="number" id="dose" name="dose">
+        </div>
+    </div>
+
+    <!-- Observaciones y Sugerencias (en una columna de 2) -->
+    <div style="display: flex;">
+        <div style="flex: 1;">
+            <label for="observations" style="color: white;">Observaciones:</label>
+            <textarea id="observations" name="observations"></textarea>
+        </div>
+        <div style="flex: 1;">
+            <label for="suggestions" style="color: white;">Sugerencias:</label>
+            <textarea id="suggestions" name="suggestions"></textarea>
+        </div>
+    </div>
+
+    <!-- Posición (si es relevante) -->
+    <input type="hidden" name="position" value="{{ position.id }}">
+
+    <!-- Botón de Calcular -->
+    <input type="button" value="Calcular" onclick="calculateMinMax()">
+
+    <!-- Botón de Guardar -->
+    <input type="submit" value="Guardar">
+</form>
+
+<script>
+    function calculateMinMax() {
+        const measurements = [];
+        for (let row = 1; row <= 5; row++) {
+            for (let col = 1; col <= 5; col++) {
+                const value = parseFloat(document.getElementById(`m_${row}${col}`).value);
+                measurements.push(value);
+            }
+        }
+
+        const min = Math.min(...measurements);
+        const max = Math.max(...measurements);
+
+        document.getElementById('min').value = min;
+        document.getElementById('max').value = max;
+
+        // Calcular el LAeqT
+        const logSum = measurements.reduce((sum, measurement) => sum + Math.log10(Math.pow(10, 0.1 * measurement)), 0);
+        const LAeqT = 10 * (logSum / 25); // 25 mediciones en total
+
+        // Mostrar el resultado en el campo "average"
+        document.getElementById('average').value = LAeqT.toFixed(4); // Asegura 7 decimales
+    }
+</script>
+{% endblock %}

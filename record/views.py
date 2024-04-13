@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 
 from django.db.models import Count
 from ilupt.models import LightingEvaluation
+from ruido.models import RuidoEvaluation
+
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -45,31 +47,45 @@ def list(request):
 
 #muestra los puestos por area al seleccionar el area 
 @login_required(login_url="login")
-def area(request,area_id):
-    #crea pagina de cada area
-    area=get_object_or_404(Area,id=area_id)
+def area(request, area_id):
+    # Crea una página para cada área
+    area = get_object_or_404(Area, id=area_id)
+
     # Si el usuario no es superusuario, asegúrate de que el puesto pertenece al usuario que ha iniciado sesión
     if not request.user.is_superuser and area.company.user != request.user:
-        return HttpResponseForbidden("No tienes permiso para ver esta area.")
+        return HttpResponseForbidden("No tienes permiso para ver esta área.")
 
+    # Establece el ID del área seleccionada en la sesión
+    request.session['selected_area_id'] = area_id
 
-    
     # Obtén el ID de la empresa seleccionada de la sesión
     company_id = request.session.get('selected_company_id')
     company = get_object_or_404(Company, id=company_id)
 
     if request.user.is_superuser:
-    #enlaza los position por area y empresa
+        # Enlaza los puestos de trabajo por área y empresa
         positions = Position.objects.filter(area=area, area__company=company)
     else:
-        positions = Position.objects.filter(area=area, area__company=company,public=True)
+        # Filtra los puestos de trabajo públicos por área y empresa
+        positions = Position.objects.filter(area=area, area__company=company, public=True)
 
-    return render(request,'areas/area.html',{
-        'area':area,
-        'positions':positions
+    return render(request, 'areas/area.html', {
+        'area': area,
+        'positions': positions
     })
+#metodo para mostrar los puestos del area seleccionada
+@login_required(login_url="login")
+def puestos(request, area_id):
+    # Obtiene el área seleccionada
+    selected_area = get_object_or_404(Area, id=area_id)
 
+    # Obtiene los puestos de trabajo de la área seleccionada
+    positions = Position.objects.filter(area=selected_area)
 
+    return render(request, 'areas/area.html', {
+        'positions': positions,
+        'area_id': area_id  # Asegúrate de que area_id está en el contexto
+    })
 
 
 @login_required(login_url="login")
@@ -304,6 +320,8 @@ def search_position(request, area_id):
 #evaluaciones------------
 
 #detai.html
+from ruido.models import RuidoEvaluation  # Asegúrate de importar el modelo RuidoEvaluation
+
 @login_required(login_url="login")
 def position(request, position_id):
     # Crea la página de cada puesto
@@ -313,18 +331,25 @@ def position(request, position_id):
     if not request.user.is_superuser and position.area.company.user != request.user:
         return HttpResponseForbidden("No tienes permiso para ver este puesto.")
 
-    # Obtiene las evaluaciones asociadas a la posición
-    evaluations = LightingEvaluation.objects.filter(position=position)
+    # Obtiene las evaluaciones de iluminación asociadas a la posición
+    lighting_evaluations = LightingEvaluation.objects.filter(position=position)
 
-    # Filtra las evaluaciones por periodo
+    # Filtra las evaluaciones de iluminación por periodo
     period = request.GET.get('period')
     if period in ['Dia', 'Noche']:
-        evaluations = evaluations.filter(period=period)
+        lighting_evaluations = lighting_evaluations.filter(period=period)
 
-    # Ordena las evaluaciones por fecha de más reciente a más antigua
-    evaluations = evaluations.order_by('-date')
+    # Ordena las evaluaciones de iluminación por fecha de más reciente a más antigua
+    lighting_evaluations = lighting_evaluations.order_by('-date')
+
+    # Obtiene las evaluaciones de ruido asociadas a la posición
+    ruido_evaluations = RuidoEvaluation.objects.filter(position=position)
+
+    # Ordena las evaluaciones de ruido por fecha de más reciente a más antigua
+    ruido_evaluations = ruido_evaluations.order_by('-date')
 
     return render(request, 'positions/detail.html', {
         'position': position,
-        'evaluations': evaluations
+        'lighting_evaluations': lighting_evaluations,
+        'ruido_evaluations': ruido_evaluations
     })

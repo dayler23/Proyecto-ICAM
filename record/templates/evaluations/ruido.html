@@ -1,0 +1,30 @@
+<!-- Evaluaciones de Ruido -->
+    <button id="toggleAllRuidoEvaluationsButton" style="background-color: orange; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+        <i class="fas fa-angle-down"></i> Mostrar/Ocultar Evaluaciones RUIDO
+    </button>
+    <div id="ruidoEvaluations">
+        <h2>Evaluaciones de Ruido</h2>
+        {% for evaluation in ruido_evaluations %}
+            <div class="evaluation">
+                <h3>Evaluación realizada el {{ evaluation.date }}</h3>
+                <p><strong>Tipo de Ruido:</strong> {{ evaluation.get_type_display }}</p>
+                <p><strong>Tipo de Fuente:</strong> {{ evaluation.get_source_type_display }}</p>
+                <p><strong>Mínimo:</strong> {{ evaluation.min }}</p>
+                <p><strong>Máximo:</strong> {{ evaluation.max }}</p>
+                <p><strong>Promedio:</strong> {{ evaluation.average }}</p>
+                <p><strong>Parametro:</strong> {{ evaluation.parameter }}</p>
+
+                <!-- Agrega el resto de los campos que quieres mostrar -->
+            </div>
+        {% endfor %}
+    </div>
+<script>
+    document.getElementById('toggleAllRuidoEvaluationsButton').addEventListener('click', function() {
+        var ruidoEvaluations = document.getElementById('ruidoEvaluations');
+        if (ruidoEvaluations.style.display === 'none') {
+            ruidoEvaluations.style.display = 'block';
+        } else {
+            ruidoEvaluations.style.display = 'none';
+        }
+    });
+</script>

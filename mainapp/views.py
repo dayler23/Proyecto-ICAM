@@ -7,6 +7,7 @@ from record.models import User,Company, Position  # Importa los modelos de la em
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from ilupt.models import LightingEvaluation
+from datetime import timedelta
 
 # Create your views here.
 from django.db.models.functions import Lower
@@ -22,7 +23,7 @@ def index(request):
     else:
         companies = Company.objects.filter(user=request.user).annotate(area_count=Count('area')).order_by(Lower('name'))
 
-    # Obtén la última evaluación de iluminación para cada empresa
+    # # Obtén la última evaluación de iluminación para cada empresa
     for company in companies:
         latest_evaluation = None
         for area in company.area_set.all():
@@ -31,6 +32,10 @@ def index(request):
                 if evaluation and (latest_evaluation is None or evaluation.date > latest_evaluation.date):
                     latest_evaluation = evaluation
         company.latest_evaluation = latest_evaluation
+
+        # Calcula la fecha de la próxima evaluación sumando un año a la fecha de la última evaluación
+        if latest_evaluation:
+            company.next_evaluation = latest_evaluation.date + timedelta(days=365)
 
     if not companies.exists():
         messages.warning(request, "No hay empresas disponibles")

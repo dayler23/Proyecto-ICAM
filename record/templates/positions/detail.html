@@ -21,10 +21,9 @@
             <strong>TIPO DE ACTIVIDAD:</strong> {{position.activity_type|safe}}
         </p>
         <div>
-            <button class="btn-eva" type="button" onclick="location.href='{% url 'evaluacion_iluminacion' position.id %}'">ILUMINACION IES</button>
-            <button class="btn-eva" type="button">ILUMINACION CTS</button>
+            <button class="btn-eva" type="button" onclick="location.href='{% url 'evaluacion_iluminacion' position.id %}'">ILUMINACION</button>
 
-            <button class="btn-eva" type="button">RUIDO</button>
+            <button class="btn-eva" type="button" onclick="location.href='{% url 'evaluacion_ruido' position.id %}'">RUIDO</button>
 
         </div>
         </div>
@@ -34,7 +33,18 @@
 </div>
 </br>
 <hr>
-{% if evaluations %}
-    {% include "evaluations/ilu_pt.html"  %}
-{% endif %}
+<div id="iluminacion">
+    {% if lighting_evaluations %}
+        {% include "evaluations/ilu_pt.html"  %}
+    {% endif %}
+</div>
+
+<div id="ruido">
+    {% if ruido_evaluations %}
+        {% include "evaluations/ruido.html"  %}
+    {% endif %}
+</div>
+
+
+
 {%endblock%}

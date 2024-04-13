@@ -30,6 +30,9 @@ urlpatterns = [
 
     path('', include('ilupt.urls')),
 
+    path('', include('ruido.urls')),
+
+
 
 ]
 

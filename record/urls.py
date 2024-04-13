@@ -24,7 +24,7 @@ urlpatterns = [
     path('eliminar-puesto/<int:area_id>/puesto/<int:position_id>/eliminar/', views.delete_position, name='delete_position'),
     path('editar-puesto/<int:area_id>/puesto/<int:position_id>/editar/', views.edit_position, name='edit_position'),
     path('buscar-puesto/<int:area_id>/', views.search_position, name='search_position'),
-
+    path('puestos/<int:area_id>/', views.puestos, name='puestos'),
 
 ]
 

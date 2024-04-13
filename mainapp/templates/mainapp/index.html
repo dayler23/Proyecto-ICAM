@@ -58,7 +58,7 @@
             <p>{{ company.area_count }} área(s) registradas en total.</p>
             {% if company.latest_evaluation %}
             <p>Última evaluación de iluminación: {{ company.latest_evaluation.date }}</p>
-            
+            <p>Próxima evaluación de iluminación: {{ company.next_evaluation }}</p>
         {% endif %}
 
             
