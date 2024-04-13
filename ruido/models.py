@@ -26,7 +26,7 @@ class RuidoEvaluation(models.Model):
 
     exposure_time = models.DecimalField(max_digits=3, decimal_places=2, default=0.0, verbose_name='TMPE (horas)')
 
-    min_exposure_time = models.DurationField(null=True, blank=True, verbose_name='TPE')
+    min_exposure_time = models.DecimalField(max_digits=3, decimal_places=2, default=0.0, verbose_name='TPE (horas)')
     dose = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Dosis')
     method = models.CharField(max_length=100, default='Medición del Nivel de Presión Acustica Continuo Equivalente Ponderado A', verbose_name='Metodo')
     

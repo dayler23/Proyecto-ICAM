@@ -28,38 +28,41 @@
             <input type="date" id="date" name="date" required>
         </div>
 
-        <!-- Segunda columna (Tabla 5x5 para mediciones) -->
-        <div style="flex: 2;">
-            <table style="border-collapse: collapse;">
-                {% for row in "12345" %}
-                    <tr>
-                        {% for col in "12345" %}
-                            <td style="padding: 5px;">
-                                <input type="number" name="m_{{ row }}{{ col }}" id="m_{{ row }}{{ col }}" >
-                            </td>
-                        {% endfor %}
-                    </tr>
+<!-- Segunda columna (Tabla 5x5 para mediciones) -->
+<div style="flex: 2; padding: 10px;">
+    <h2 style="color: white;">Mediciones</h2>
+    <table style="border-collapse: collapse;background-color: #1c314c; ">
+        {% for row in "12345" %}
+            <tr>
+                {% for col in "12345" %}
+                    <td style="padding: 10px;">
+                        <input type="text" name="m_{{ row }}{{ col }}" id="m_{{ row }}{{ col }}" pattern="[0-9]+([,.][0-9]+)?" title="Ingresa un número válido" style="width: 120px;" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');"></td>
                 {% endfor %}
-            </table>
-        </div>
-
+            </tr>
+        {% endfor %}
+    </table>
+</div>
         <!-- Tercera columna -->
         <div style="flex: 1;">
             <label for="min" style="color: white;">Mínimo:</label>
-            <input type="number" id="min" name="min">
+            <input type="text" id="min" name="min" readonly>
             <label for="max" style="color: white;">Máximo:</label>
-            <input type="number" id="max" name="max">
+            <input type="number" id="max" name="max" readonly>
 
 
             <label for="average" style="color: white;">LAeqT:</label>
-            <input type="number" id="average" name="average">
+            <input type="text" id="average" name="average" readonly>
             <label for="parameter" style="color: white;">LEP(*):</label>
-            <input type="number" id="parameter" name="parameter" value="85" readonly>
+            <input type="text" id="parameter" name="parameter" value="85" readonly>
                         
             <label for="exposure_time" style="color: white;">TMPE:</label>
-            <input type="number" id="exposure_time" name="exposure_time">
+            <input type="text" id="exposure_time" name="exposure_time" readonly>
+
+            <label for="min_exposure_time" style="color: white;">TPE:</label>
+            <input type="text" id="min_exposure_time" name="min_exposure_time"  pattern="[0-9]+([,.][0-9]+)?" title="Ingresa un número válido">
+            
             <label for="dose" style="color: white;">Dosis:</label>
-            <input type="number" id="dose" name="dose">
+            <input type="text" id="dose" name="dose" readonly>
         </div>
     </div>
 
@@ -84,7 +87,6 @@
     <!-- Botón de Guardar -->
     <input type="submit" value="Guardar">
 </form>
-
 <script>
     function calculateMinMax() {
         const measurements = [];
@@ -107,6 +109,16 @@
 
         // Mostrar el resultado en el campo "average"
         document.getElementById('average').value = LAeqT.toFixed(4); // Asegura 7 decimales
+
+        // Calcular el TMPE
+        const TMPE = 8 / Math.pow(2, (LAeqT - 85) / 3);
+        document.getElementById('exposure_time').value = TMPE.toFixed(4); // Asegura 7 decimales
+
+        // Calcular la dosis (TPE / TMPE)
+        const TPE = parseFloat(document.getElementById('min_exposure_time').value);
+        const dose = TPE / TMPE;
+        document.getElementById('dose').value = dose.toFixed(4); // Asegura 7 decimales
     }
 </script>
+
 {% endblock %}
