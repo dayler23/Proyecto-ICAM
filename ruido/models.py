@@ -61,3 +61,6 @@ class RuidoEvaluation(models.Model):
     suggestions = models.TextField(null=True, blank=True, verbose_name='Sugerencias')
 
     position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Posición')
+    
+    def __str__(self):
+        return f"Evaluación de Ruido para {self.position.name} en {self.date}"

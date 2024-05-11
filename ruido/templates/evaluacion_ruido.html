@@ -3,8 +3,8 @@
 {% block title %} Evaluación de Ruido para {{ position.name }} {% endblock %}
 
 {% block content %}
-<h1>Evaluación de Ruido para {{ position.name }} {{method}}</h1>
-<form method="post">
+<h1>Evaluación de Ruido para {{ position.name }}</h1>
+<form method="post" action="{% url 'evaluacion_ruido' position.id %}">
     {% csrf_token %}
     <div style="display: flex;">
         <!-- Primera columna -->
@@ -26,6 +26,13 @@
 
             <label for="date" style="color: white;">Fecha:</label>
             <input type="date" id="date" name="date" required>
+
+            <!-- Agrega esto en tu plantilla dentro del <form> donde corresponda -->
+        
+            <label for="id_method">Método:</label>
+            <input type="text" name="method" id="id_method" value="{{ form.instance.method }}" >
+        
+
         </div>
 
 <!-- Segunda columna (Tabla 5x5 para mediciones) -->
@@ -45,24 +52,24 @@
         <!-- Tercera columna -->
         <div style="flex: 1;">
             <label for="min" style="color: white;">Mínimo:</label>
-            <input type="text" id="min" name="min" readonly>
+            <input type="text" id="min" name="min" >
             <label for="max" style="color: white;">Máximo:</label>
-            <input type="number" id="max" name="max" readonly>
+            <input type="number" id="max" name="max" >
 
 
             <label for="average" style="color: white;">LAeqT:</label>
-            <input type="text" id="average" name="average" readonly>
+            <input type="text" id="average" name="average" >
             <label for="parameter" style="color: white;">LEP(*):</label>
-            <input type="text" id="parameter" name="parameter" value="85" readonly>
+            <input type="text" id="parameter" name="parameter" value="85" >
                         
             <label for="exposure_time" style="color: white;">TMPE:</label>
-            <input type="text" id="exposure_time" name="exposure_time" readonly>
+            <input type="text" id="exposure_time" name="exposure_time" >
 
             <label for="min_exposure_time" style="color: white;">TPE:</label>
-            <input type="text" id="min_exposure_time" name="min_exposure_time"  pattern="[0-9]+([,.][0-9]+)?" title="Ingresa un número válido">
+            <input type="text" id="min_exposure_time" name="min_exposure_time" pattern="[0-9]+([,.][0-9]+)?" title="Ingresa un número válido">
             
             <label for="dose" style="color: white;">Dosis:</label>
-            <input type="text" id="dose" name="dose" readonly>
+            <input type="text" id="dose" name="dose" >
         </div>
     </div>
 
@@ -88,36 +95,57 @@
     <input type="submit" value="Guardar">
 </form>
 <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const measurements = document.querySelectorAll('input[name^="m_"]');
+        let allFilled = true;
+        measurements.forEach(function(input) {
+            if (!input.value) {
+                allFilled = false;
+            }
+        });
+
+        if (!allFilled) {
+            event.preventDefault(); // Evita que el formulario se envíe
+            alert('Por favor, completa todas las mediciones antes de guardar.');
+        }
+    });
+
     function calculateMinMax() {
         const measurements = [];
         for (let row = 1; row <= 5; row++) {
             for (let col = 1; col <= 5; col++) {
                 const value = parseFloat(document.getElementById(`m_${row}${col}`).value);
-                measurements.push(value);
+                if (!isNaN(value)) {
+                    measurements.push(value);
+                }
             }
         }
 
-        const min = Math.min(...measurements);
-        const max = Math.max(...measurements);
+        if (measurements.length === 25) {
+            const min = Math.min(...measurements);
+            const max = Math.max(...measurements);
 
-        document.getElementById('min').value = min;
-        document.getElementById('max').value = max;
+            document.getElementById('min').value = min;
+            document.getElementById('max').value = max;
 
-        // Calcular el LAeqT
-        const logSum = measurements.reduce((sum, measurement) => sum + Math.log10(Math.pow(10, 0.1 * measurement)), 0);
-        const LAeqT = 10 * (logSum / 25); // 25 mediciones en total
+            // Calcular el LAeqT
+            const logSum = measurements.reduce((sum, measurement) => sum + Math.log10(Math.pow(10, 0.1 * measurement)), 0);
+            const LAeqT = 10 * (logSum / measurements.length);
 
-        // Mostrar el resultado en el campo "average"
-        document.getElementById('average').value = LAeqT.toFixed(4); // Asegura 7 decimales
+            // Mostrar el resultado en el campo "average"
+            document.getElementById('average').value = LAeqT.toFixed(2);
 
-        // Calcular el TMPE
-        const TMPE = 8 / Math.pow(2, (LAeqT - 85) / 3);
-        document.getElementById('exposure_time').value = TMPE.toFixed(4); // Asegura 7 decimales
+            // Calcular el TMPE
+            const TMPE = 8 / Math.pow(2, (LAeqT - 85) / 3);
+            document.getElementById('exposure_time').value = TMPE.toFixed(2);
 
-        // Calcular la dosis (TPE / TMPE)
-        const TPE = parseFloat(document.getElementById('min_exposure_time').value);
-        const dose = TPE / TMPE;
-        document.getElementById('dose').value = dose.toFixed(4); // Asegura 7 decimales
+            // Calcular la dosis (TPE / TMPE)
+            const TPE = parseFloat(document.getElementById('min_exposure_time').value);
+            const dose = TPE / TMPE;
+            document.getElementById('dose').value = dose.toFixed(2);
+        } else {
+            alert('Por favor, completa todas las mediciones antes de calcular.');
+        }
     }
 </script>
 
